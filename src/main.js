@@ -15,6 +15,8 @@ import router from './router'
 import { menuHeader, menuAside } from './menuConfig'
 import { frameInRoutes } from './routerConfig'
 
+
+
 console.log('frameInRoutes', frameInRoutes)
 
 // 核心插件

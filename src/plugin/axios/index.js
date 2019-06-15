@@ -43,9 +43,12 @@ const service = axios.create({
 service.interceptors.request.use(
   config => {
     // 在请求发送之前做一些处理
-    const token = util.cookies.get('token')
+    //const token = util.cookies.get('token')
     // 让每个请求携带token-- ['X-Token']为自定义key 请根据实际情况自行修改
-    config.headers['X-Token'] = token
+    //config.headers['X-Token'] = token
+    config.headers['X-Requested-With'] = 'XMLHttpRequest';
+    config.headers['BY-CLIENT-ID']= '04esfI0fYuD5';
+    config.headers['BY-SESSION-ID']= '2#f479aa7aeca640bf9f939ea8ba210724';
     return config
   },
   error => {

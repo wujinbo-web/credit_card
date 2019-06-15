@@ -49,16 +49,16 @@
                 <el-button size="default" @click="submit" type="primary" class="button-login">登录</el-button>
               </el-form>
             </el-card>
-            <p
+            <!-- <p
               class="page-login--options"
               flex="main:justify cross:center">
               <span><d2-icon name="question-circle"/> 忘记密码</span>
               <span>注册用户</span>
-            </p>
+            </p> -->
             <!-- 快速登录按钮 -->
-            <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
+            <!-- <el-button class="page-login--quick" size="default" type="info" @click="dialogVisible = true">
               快速选择用户（测试功能）
-            </el-button>
+            </el-button> -->
           </div>
         </div>
         <div class="page-login--content-footer">
