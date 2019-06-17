@@ -5,8 +5,6 @@ import util from '@/libs/util.ice'; // 页面和布局
 import Index from './pages/Index';
 import Login from './pages/Login';
 import Error404 from './pages/Error404';
-import Demo1 from './pages/Demo1';
-import Demo2 from './pages/Demo2';
 import ExmineList from './pages/ExmineList';
 import Ceshi from './pages/ceshi';
 import HeaderAside from './layouts/HeaderAside'; // 变量名 routerConfig 为 iceworks 检测关键字
@@ -61,21 +59,6 @@ const routerConfig = [
 
       render: h => h(),
     },
-  },
-  {
-    path: '/demo1',
-    name: 'demo1',
-    layout: HeaderAside,
-    component: Demo1,
-    meta: {
-      auth: true,
-      title: '演示 1',
-    },
-  },
-  {
-    path: '/demo2',
-    layout: HeaderAside,
-    component: Demo2,
   },
   {
     path: '/exmine/list',
