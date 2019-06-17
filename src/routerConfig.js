@@ -6,6 +6,7 @@ import Index from './pages/Index';
 import Login from './pages/Login';
 import Error404 from './pages/Error404';
 import ExmineList from './pages/ExmineList';
+import UserList from './pages/UserList';
 import Ceshi from './pages/ceshi';
 import HeaderAside from './layouts/HeaderAside'; // 变量名 routerConfig 为 iceworks 检测关键字
 // ice 会自动在这个变量下添加路由数据
@@ -73,6 +74,15 @@ const routerConfig = [
     path: '/ceshi',
     layout: HeaderAside,
     component: Ceshi,
+  },
+  {
+    path: '/user/list',
+    layout: HeaderAside,
+    component: UserList,
+    meta: {
+      auth: true,
+      title: '用户列表',
+    },
   },
 ]; // 不参与菜单显示的
 // ice 不会处理这部分
