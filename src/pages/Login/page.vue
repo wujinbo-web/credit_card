@@ -29,7 +29,7 @@
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
                 <el-form-item prop="username">
-                  <el-input type="text" v-model="formLogin.username" placeholder="用户名">
+                  <el-input v-model="formLogin.username" placeholder="手机号码">
                     <i slot="prepend" class="fa fa-user-circle-o"></i>
                   </el-input>
                 </el-form-item>
@@ -73,25 +73,16 @@
         </div>
       </div>
     </div>
-    <el-dialog
-      title="快速选择用户"
-      :visible.sync="dialogVisible"
-      width="400px">
-      <el-row :gutter="10" style="margin: -20px 0px -10px 0px;">
-        <el-col v-for="(user, index) in users" :key="index" :span="8">
-          <div class="page-login--quick-user" @click="handleUserBtnClick(user)">
-            <d2-icon name="user-circle-o"/>
-            <span>{{user.name}}</span>
-          </div>
-        </el-col>
-      </el-row>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import dayjs from 'dayjs'
 import { mapActions } from 'vuex'
+
+import { postUrl } from '@/api'
+import { user_login } from '@/api/apiUrl'
+
 export default {
   data () {
     return {
@@ -109,11 +100,6 @@ export default {
           name: '编辑',
           username: 'editor',
           password: 'editor'
-        },
-        {
-          name: '用户1',
-          username: 'user1',
-          password: 'user1'
         }
       ],
       // 表单
@@ -125,7 +111,7 @@ export default {
       // 校验
       rules: {
         username: [
-          { required: true, message: '请输入用户名', trigger: 'blur' }
+          { required: true, message: '请输入手机号码', trigger: 'blur' }
         ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
@@ -133,7 +119,8 @@ export default {
         code: [
           { required: true, message: '请输入验证码', trigger: 'blur' }
         ]
-      }
+      },
+      loading: false,
     }
   },
   mounted () {
@@ -151,31 +138,27 @@ export default {
     refreshTime () {
       this.time = dayjs().format('HH:mm:ss')
     },
-    /**
-     * @description 接收选择一个用户快速登录的事件
-     * @param {Object} user 用户信息
-     */
-    handleUserBtnClick (user) {
-      this.formLogin.username = user.username
-      this.formLogin.password = user.password
-      this.submit()
-    },
-    /**
-     * @description 提交表单
-     */
     // 提交登录信息
     submit () {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
+          console.log(valid);
           // 登录
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
+          // let res = postUrl(user_login,{
+          //   mobile: this.formLogin.mobile,
+          //   password: this.formLogin.password,
+          //   device_token:"tt", //设备标识
+          //   device_type:"pc", //设备类型(获取浏览器的类型)
+          //   loginInfo:"pc", //登录额外信息，可传空字符串
+          // })
           this.login({
             username: this.formLogin.username,
             password: this.formLogin.password
-          })
+          })  
             .then(() => {
-              // 重定向对象不存在则返回顶层路径
+              // // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
             })
         } else {

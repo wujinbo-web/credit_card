@@ -2,8 +2,6 @@
   <div class="d2-crud">
     <d2-crud
       ref="d2Crud"
-      :data="data"
-      :columns="columns"
       :pagination="pagination"
       :form-options="formOptions"
       :loading="loading"

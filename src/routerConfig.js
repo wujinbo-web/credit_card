@@ -8,6 +8,11 @@ import Error404 from './pages/Error404';
 import ExmineList from './pages/ExmineList';
 import UserList from './pages/UserList';
 import Ceshi from './pages/ceshi';
+import BannerList from './pages/BannerList';
+import SuggestList from './pages/SuggestList';
+import PublicMessageList from './pages/PublicMessageList';
+import ManageUserFee from './pages/ManageUserFee';
+import PaymentList from './pages/PaymentList';
 import HeaderAside from './layouts/HeaderAside'; // 变量名 routerConfig 为 iceworks 检测关键字
 // ice 会自动在这个变量下添加路由数据
 // 请不要修改名称
@@ -24,17 +29,7 @@ import HeaderAside from './layouts/HeaderAside'; // 变量名 routerConfig 为 i
 // 下面两个页面就是对比 你可以分别观察两个页面上显示的路由数据差异
 
 const routerConfig = [
-  // 首页 必须 name:index
-  {
-    path: '/',
-    name: 'index',
-    layout: HeaderAside,
-    component: Index,
-    meta: {
-      auth: true,
-      title: '首页',
-    },
-  }, // 刷新页面 必须保留
+  // 刷新页面 必须保留
   {
     path: '/refresh',
     name: 'refresh',
@@ -46,6 +41,15 @@ const routerConfig = [
       },
 
       render: h => h(),
+    },
+  },
+  {
+    path: '/user/list',
+    layout: HeaderAside,
+    component: UserList,
+    meta: {
+      auth: true,
+      title: '用户列表',
     },
   }, // 页面重定向 必须保留
   {
@@ -74,15 +78,41 @@ const routerConfig = [
     path: '/ceshi',
     layout: HeaderAside,
     component: Ceshi,
-  },
+  }, // 首页 必须 name:index
   {
-    path: '/user/list',
+    path: '/',
+    name: 'index',
     layout: HeaderAside,
-    component: UserList,
+    component: Index,
     meta: {
       auth: true,
-      title: '用户列表',
+      title: '首页',
     },
+  },
+  {
+    path: '/banner/list',
+    layout: HeaderAside,
+    component: BannerList,
+  },
+  {
+    path: '/suggest/list',
+    layout: HeaderAside,
+    component: SuggestList,
+  },
+  {
+    path: '/publicmessage/list',
+    layout: HeaderAside,
+    component: PublicMessageList,
+  },
+  {
+    path: '/manage/userfee',
+    layout: HeaderAside,
+    component: ManageUserFee,
+  },
+  {
+    path: '/payment/list',
+    layout: HeaderAside,
+    component: PaymentList,
   },
 ]; // 不参与菜单显示的
 // ice 不会处理这部分

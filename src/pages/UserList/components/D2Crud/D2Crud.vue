@@ -9,11 +9,40 @@
       add-mode
       :add-button="addButton"
       :form-template="formTemplate"
-      :form-rules="formRules"
       :form-options="formOptions"
+      :rowHandle="rowHandle"
+      @custom-emit-1='setUserGrade'
+      @custom-emit-3='userqueryFee'
       @pagination-current-change="paginationCurrentChange"
       @row-add="handleRowAdd"
-      @dialog-cancel="handleDialogCancel"/>
+      @dialog-cancel="handleDialogCancel"
+      />
+
+      <el-dialog
+        title="设置用户等级"
+        width="1000"
+        :visible.sync="dialogVisible"
+      >
+        <el-form :model="form" ref="form" :rules="rules">
+          <el-form-item label="等级id" prop="grade_id">
+            <el-input v-model="form.grade_id" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('form')">提交</el-button>
+          </el-form-item>
+        </el-form>
+      </el-dialog>
+
+      <el-dialog
+        width="400"
+        :visible.sync="dialogVisible3">
+        <d2-crud
+          ref="d2Crud2"
+          title="支付通道关联会员配置查询"
+          :columns="columns2"
+          :data="data2"/>
+      </el-dialog>
+    </d2-crud>
   </div>
 </template>
 
@@ -21,7 +50,7 @@
 import Vue from 'vue'
 import D2Crud from '@d2-projects/d2-crud'
 import { postUrl } from '@/api'
-import { user_list, user_add } from '@/api/apiUrl'
+import { user_list, user_add,user_setGrade,set_queryFee,user_queryFee} from '@/api/apiUrl'
 import { timeSite, numTime } from '@/tool/TimeTransition'
 
 Vue.use(D2Crud)
@@ -33,34 +62,121 @@ export default {
         {
           title: 'xx号码',
           key: 'country_no',
-          width: '120'
-        },
-        {
-          title: '创建时间',
-          key: 'create_time',
-          width: '240'
-        },
-        {
-          title: '用户ID',
-          key: 'id',
-          width: '120'
-        },
-        {
-          title: '电话',
-          key: 'mobile',
-          width: '240'
+          align:'center',
+          width: '80'
         },
         {
           title: '项目ID',
           key: 'project_id',
-          width: '120'
+          align:'center',
+          width: '80'
+        },
+        {
+          title: '用户ID',
+          key: 'id',
+          align:'center',
+          width: '80'
+        },
+        {
+          title: '创建时间',
+          key: 'create_time',
+          align:'center',
+          width: '180'
+        },
+        {
+          title: '电话',
+          key: 'mobile',
+          align:'center',
+          width: '160'
         },
       ],
       data: [],
+      columns2: [
+        {
+          title: 'channel_code',
+          key: 'channel_code',
+          align:'center',
+          width: '80'
+        },
+        {
+          title: 'id',
+          key: 'id',
+          align:'center',
+          width: '80'
+        },
+        {
+          title: '用户ID',
+          key: 'uid',
+          align:'center',
+          width: '80'
+        },
+        {
+          title: 'start_amt',
+          key: 'start_amt',
+          align:'center',
+          width: '100'
+        },
+        {
+          title: 'end_amt',
+          key: 'end_amt',
+          align:'center',
+          width: '100'
+        },
+        {
+          title: 'enable',
+          key: 'enable',
+          align:'center',
+          width: '80'
+        },
+        {
+          title: 'fixed_rate',
+          key: 'fixed_rate',
+          align:'center',
+          width: '100'
+        },
+        {
+          title: 'rate',
+          key: 'rate',
+          align:'center',
+          width: '80'
+        },
+        {
+          title: '同步',
+          key: 'sync',
+          align:'center',
+          width: '80'
+        },
+      ],
+      data2: [],
       addButton: {
         icon: 'el-icon-plus',
         size: 'small'
       },
+      rowHandle: {
+        columnHeader: '操作',
+        width: '340',
+        align:'center',
+        custom:[
+          {
+            text: '设置等级',
+            size: 'small',
+            emit: 'custom-emit-1',
+            show(){
+              return true;
+            }
+          },
+          {
+            text: '查看手续费',
+            type: 'info',
+            size: 'small',
+            emit: 'custom-emit-3',
+            show(){
+              return true;
+            }
+          }
+        ]
+      },
+      //添加用户表格
       formTemplate: {
         mobile: {
           title: '电话号码',
@@ -84,10 +200,13 @@ export default {
           }
         },
       },
-      formRules: {
-        mobile: [ { required: true, message: '请输入电话号码', trigger: 'blur' } ],
-        password: [ { required: true, message: '请输入密码', trigger: 'blur' } ],
-        // idcode: [ { required: true, message: '请输入地址', trigger: 'blur' } ]
+      formOptions: {
+        labelWidth: '80px',
+        labelPosition: 'left',
+        saveLoading: false
+      },
+      rules: {
+        grade_id: [ { required: true, message: '请输入等级', trigger: 'blur' } ],
       },
       formOptions: {
         labelWidth: '80px',
@@ -101,15 +220,43 @@ export default {
         total: 0,
       },
       loading: false,
+      form:{
+        grade_id: null,//1: 普通用户 2: VIP1
+        user_id: null,//被设置手续费的用户
+        uid:null,//登录操作用户
+        sid:null,
+      },
+      dialogVisible: false,
+      dialogVisible3: false,
+      queryFeeData:[],
     }
   },
   mounted(){
     this.getUserList();
   },
   methods: {
+    //提交表单
+    submitForm(formName) {
+      this.$refs[formName].validate(async (valid) => {
+        if (valid) {
+          //设置用户等级
+          let data = await postUrl(user_setGrade,{
+            user_id: this.form.user_id,
+            grade_id: this.form.grade_id,
+          });
+          console.log('设置用户等级 返回结果：',data)
+          this.dialogVisible = false;
+          this.$message.success('设置成功');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+        this.form.user_id = null;
+      })
+    },
+    //请求用户列表数据
     async getUserList(){
       this.loading = true;
-      //请求数据
       let data = await postUrl(user_list,{
         page_index: this.pagination.currentPage, //页码
         page_size: this.pagination.pageSize, //每页个数
@@ -127,7 +274,6 @@ export default {
           project_id: item.project_id,
         }
       })
-      console.log('用户列表数据：',data);
     },
     handleRowAdd (row, done) {
       this.formOptions.saveLoading = true
@@ -149,10 +295,25 @@ export default {
       });
       done()
     },
+
     //分页操作
     paginationCurrentChange (currentPage) {
       this.pagination.currentPage = currentPage
       this.getUserList()
+    },
+    //设置用户等级
+    setUserGrade({ row, index }){
+      this.dialogVisible = true;
+      this.form.user_id = row.id;
+    },
+    //查看用户手续费
+    async userqueryFee({ row, index }){
+      let data = await postUrl(user_queryFee,{
+        user_id: row.id
+      });
+      this.data2 = data;
+      this.dialogVisible3 = true;
+      console.log('查看用户手续费：',data);
     },
   }
 }

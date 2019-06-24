@@ -25,6 +25,31 @@ const asideMenuConfig = [
     path: '/user/list',
     icon: 'home',
   },
+  {
+    name: 'BannerList',
+    path: '/banner/list',
+    icon: 'home',
+  },
+  {
+    name: '意见反馈列表',
+    path: '/suggest/list',
+    icon: 'home',
+  },
+  {
+    name: '公共消息列表',
+    path: '/publicmessage/list',
+    icon: 'home',
+  },
+  {
+    name: '用户手续费管理',
+    path: '/manage/userfee',
+    icon: 'home',
+  },
+  {
+    name: '支付列表',
+    path: '/payment/list',
+    icon: 'home',
+  },
 ]; // 顶栏菜单配置
 // ice 不会修改 headerMenuConfig
 // 如果你需要功能开发之前就配置出菜单原型，可以只设置 name 字段
