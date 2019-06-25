@@ -4,7 +4,14 @@
       ref="d2Crud"
       :columns="columns"
       :data="data"
+      add-mode
+      :add-button="addButton"
       :rowHandle="rowHandle"
+      :form-template="formTemplate"
+      :form-rules="formRules"
+      @row-add="handleRowAdd"
+      @row-edit="handleRowEdit"
+      @dialog-cancel="handleDialogCancel"
       @custom-emit-1="showDialog"/>
       <el-dialog
         width="800"
@@ -24,7 +31,7 @@ import Vue from 'vue'
 import D2Crud from '@d2-projects/d2-crud'
 
 import { postUrl } from '@/api'
-import { payment_list,payment_queryByChannel } from '@/api/apiUrl'
+import { payment_list,payment_queryByChannel,payment_add,payment_edit } from '@/api/apiUrl'
 Vue.use(D2Crud)
 
 export default {
@@ -32,12 +39,12 @@ export default {
     return {
       columns: [
         {
-          title: '代理通道',
+          title: '渠道商名',
           key: 'channel_agent',
           width: '100'
         },
         {
-          title: '通道编码',
+          title: '渠道商通道 ',
           key: 'channel_code',
           width: '100'
         },
@@ -47,23 +54,23 @@ export default {
           width: '180'
         },
         {
-          title: '每日限制金额',
+          title: '每日限制额度 元',
           key: 'day_limit_money',
           width: '120'
         },
 
         {
-          title: 'time_end',
+          title: '可交易时间结束',
           key: 'day_time_end',
           width: '100'
         },
         {
-          title: 'time_start',
+          title: '可交易时间开始 ',
           key: 'day_time_start',
           width: '100'
         },
         {
-          title: 'fee_per',
+          title: '百分比',
           key: 'fee_per',
           width: '100'
         },
@@ -78,12 +85,12 @@ export default {
           width: '80'
         },
         {
-          title: '单张卡每日限制金额',
+          title: '单卡单日 元',
           key: 'single_card_day_limit_money',
           width: '100'
         },
         {
-          title: '单张卡金额限制',
+          title: '单笔额度 元',
           key: 'single_limit_money',
           width: '100'
         },
@@ -96,17 +103,17 @@ export default {
           width: '100'
         },
         {
-          title: '通道编码',
+          title: '渠道商通道',
           key: 'channel_code',
           width: '100'
         },
         {
-          title: 'time_end',
+          title: '可交易时间结束',
           key: 'day_time_end',
           width: '100'
         },
         {
-          title: 'time_start',
+          title: '可交易时间开始',
           key: 'day_time_start',
           width: '100'
         },
@@ -127,7 +134,7 @@ export default {
           width: '100'
         },
         {
-          title: 'fee_per',
+          title: '百分比',
           key: 'fee_per',
           width: '100'
         },
@@ -148,8 +155,12 @@ export default {
         },
       ],
       data2: [],
+      addButton: {
+        icon: 'el-icon-plus',
+        size: 'small'
+      },
       rowHandle: {
-        width: '180',
+        width: '280',
         custom: [
           {
             text: '关联会员查询',
@@ -157,7 +168,126 @@ export default {
             size: 'small',
             emit: 'custom-emit-1'
           }
-        ]
+        ],
+        edit: {
+          text: '编辑',
+          size: 'small',
+          show (index, row) {
+            return true
+          }
+        },
+      },
+      formTemplate: {
+        title: {
+          title: '标题',
+          value: '',
+          component: {
+            span: 24,
+          }
+        },
+        id: {
+          title: 'id',
+          value: '',
+          component: {
+            span: 24,
+          }
+        },
+        fee_per: {
+          title: '百分比费率 单位 : %',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        fixed_fee: {
+          title: '固定费率 单位：元',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        day_time_start: {
+          title: '一天开始 0000',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        day_time_end: {
+          title: '一天结束 2399',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        single_limit_money: {
+          title: '单笔限额',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        single_card_day_limit_money: {
+          title: '单卡单日限额',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        day_limit_money: {
+          title: '单日限额',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        channel_code: {
+          title: '渠道商通道',
+          value: '',
+          component: {
+            name: 'el-select',
+            options: [
+              {
+                value: '488000',
+                label: '提现'
+              },
+              {
+                value: '487000',
+                label: '支付'
+              },
+              {
+                value: '663006',
+                label: '快捷'
+              }
+            ],
+            size: 'small'
+          }
+        },
+        channel_agent: {
+          title: '渠道商名',
+          value: '',
+          component: {
+            name: 'el-select',
+            options: [
+              {
+                value: 'zmf',
+                label: '暂定'
+              },
+            ],
+            size: 'small'
+          }
+        },
+      },
+      formRules: {
+        date: [ { required: true, message: '请输入日期', trigger: 'blur' } ],
+        name: [ { required: true, message: '请输入姓名', trigger: 'change' } ],
+        address: [ { required: true, message: '请输入地址', trigger: 'blur' } ]
+      },
+      formOptions: {
+        labelWidth: '80px',
+        labelPosition: 'left',
+        saveLoading: false,
+        gutter: 20
       },
       dialogVisible: false,
       dialogVisible2: false,
@@ -174,10 +304,10 @@ export default {
   methods:{
     //请求数据
       async  getPaymentList(){
-      let data = await postUrl(payment_list,{
-        page_index: this.pagination.currentPage,
-        page_size: this.pagination.pageSize,
-      });
+        let data = await postUrl(payment_list,{
+          page_index: this.pagination.currentPage,
+          page_size: this.pagination.pageSize,
+        });
       console.log('请求数据：',data);
       this.data = data;
       this.data.map(item => {
@@ -221,7 +351,60 @@ export default {
         }
       })
       console.log('支付宝通道',data)
-    }
+    },
+    async handleRowAdd (row, done) {
+      this.formOptions.saveLoading = true
+      console.log(row)
+      let data = await postUrl(payment_add,{
+        title: row.title,
+        fee_per:row.fee_per,
+        fixed_fee: row.fixed_fee,
+        day_time_start: row.day_time_start,
+        day_time_end: row.day_time_end,
+        single_limit_money: row.single_limit_money,
+        single_card_day_limit_money:row.single_card_day_limit_money,
+        day_limit_money: row.day_limit_money,
+        channel_code: row.channel_code,
+        channel_agent: row.channel_agent,
+      });
+      console.log(data);
+      this.$message({
+        message: '保存成功',
+        type: 'success'
+      });
+      done()
+      this.formOptions.saveLoading = false
+    },
+    //banner-广告位 修改
+    handleRowEdit ({index, row}, done) {
+      this.formOptions.saveLoading = true
+      let data =  postUrl(payment_edit,{
+        id:row.id,
+        title: row.title,
+        fee_per:row.fee_per,
+        fixed_fee: row.fixed_fee,
+        day_time_start: row.day_time_start,
+        day_time_end: row.day_time_end,
+        single_limit_money: row.single_limit_money,
+        single_card_day_limit_money:row.single_card_day_limit_money,
+        day_limit_money: row.day_limit_money,
+        channel_code: row.channel_code,
+        channel_agent: row.channel_agent,
+      });
+      this.$message({
+        message: '编辑成功',
+        type: 'success'
+      })
+      done()
+      this.formOptions.saveLoading = false
+    },
+    handleDialogCancel (done) {
+      this.$message({
+        message: '取消保存',
+        type: 'warning'
+      });
+      done()
+    },
   }
 }
 

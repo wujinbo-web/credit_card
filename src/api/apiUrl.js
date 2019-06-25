@@ -45,3 +45,13 @@ export const message_create = 'by_Message_create'
 export const payment_list = 'by_PaymentChannel_query'
 //支付通道关联会员配置查询
 export const payment_queryByChannel = 'by_PaymentChannel_queryByChannel'
+//支付通道添加
+export const payment_add = 'by_PaymentChannel_add'
+//支付通道编辑
+export const payment_edit = 'by_PaymentChannel_update'
+
+
+//订单查询
+export const order_list = 'by_CbOrder_query'
+//订单详情
+export const order_info = 'by_CbOrder_info'
