@@ -15,13 +15,21 @@ export default {
      */
     login ({ dispatch }, {
       username = '',
-      password = ''
+      password = '',
+      // mobile = '',
+      // device_token = 'tt',
+      // device_type = 'pc',
+      // loginInfo = 'pc',
     } = {}) {
       return new Promise((resolve, reject) => {
         // 开始请求登录接口
         AccountLogin({
           username,
-          password
+          password,
+          // mobile,
+          // device_token,
+          // device_type,
+          // loginInfo
         })
           .then(async res => {
             // 设置 cookie 一定要存 uuid 和 token 两个 cookie

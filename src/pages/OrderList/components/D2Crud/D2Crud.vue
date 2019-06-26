@@ -87,15 +87,15 @@ export default {
     }
   },
   mounted(){
-    this.orderDetail()
+    // this.orderDetail()
   },
   methods:{
     //提交表单
-    submitForm(formName) {
+    async submitForm(formName) {
       this.$refs[formName].validate(async (valid) => {
         if (valid) {
           //查询订单列表
-          let data = postUrl(order_list,{
+          let data = await postUrl(order_list,{
             mobile: this.form.order_code,
             order_code: this.form.order_code,
             page_index: this.pagination.currentPage, //页码
@@ -103,7 +103,7 @@ export default {
 
           });
           console.log('查询订单列表 返回结果：',data)
-          this.$message.success('设置成功');
+          this.$message.success('查询成功');
         } else {
           console.log('error submit!!');
           return false;

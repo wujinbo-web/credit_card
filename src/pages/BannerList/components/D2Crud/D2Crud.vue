@@ -22,7 +22,7 @@
 import Vue from 'vue'
 import D2Crud from '@d2-projects/d2-crud'
 import { postUrl } from '@/api'
-import { banner_list, banner_delete, banner_update } from '@/api/apiUrl'
+import { banner_list, banner_delete, banner_add, banner_update, banner_query,banner_info,banner_position } from '@/api/apiUrl'
 import { timeSite, numTime } from '@/tool/TimeTransition'
 Vue.use(D2Crud)
 
@@ -139,6 +139,7 @@ export default {
           }
         }
       },
+      jumpType:[],//跳转类型
       formTemplate: {
         title: {
           title: '标题',
@@ -149,7 +150,7 @@ export default {
         },
         user_id: {
           title: '用户id',
-          value: '',
+          value: '2',
           component: {
             span: 24
           }
@@ -165,7 +166,9 @@ export default {
           title: '跳转类型',
           value: '',
           component: {
-            span: 24
+            name: 'el-select',
+            options:[],
+            size: 'small'
           }
         },
         img_url: {
@@ -175,23 +178,34 @@ export default {
             span: 24
           }
         },
-        date_range: {
-          title: '日期范围',
-          value: 'end_time - start_time',
+        start_time: {
+          title: '开始时间',
+          value: '',
           component: {
-            span: 24
-          }
+            span: 24,
+            name: 'el-date-picker',
+            type:"datetime"
+          },
+        },
+        end_time: {
+          title: '结束时间',
+          value: '',
+          component: {
+            span: 24,
+            name: 'el-date-picker',
+            type:"datetime"
+          },
         },
         w: {
           title: '宽',
-          value: '',
+          value: '100',
           component: {
             span: 24
           }
         },
         h: {
           title: '高',
-          value: '',
+          value: '100',
           component: {
             span: 24
           }
@@ -204,7 +218,7 @@ export default {
           }
         },
         id: {
-          title: '位置',
+          title: 'id',
           value: '',
           component: {
             span: 24
@@ -238,6 +252,9 @@ export default {
   },
   mounted(){
     this.getBannerList();
+    this.getBannerType();
+    this.getBannerPosition();//banner-广告位 返回banner广告图位置
+    this.getBannerPosition();//banner-广告位 返回banner广告图位置
   },
   methods: {
     //获取banner列表
@@ -249,13 +266,11 @@ export default {
         // position: //位置 搜索用
         // nowTime:  //时间 搜索用
       })
-      this.data = data;
-      this.data.map(item => {
-        console.log('截止时间:',timeSite(item.end_time));
+      this.data = data.map(item => {
         return {
           alis: item.alis, //标题
           click_nums: item.click_nums, //点击次数
-          create_time: item.create_time, //创建时间
+          create_time: timeSite(item.create_time), //创建时间
           end_time: timeSite(item.end_time), //截止时间
           h: item.h, //高
           w: item.w,//宽 180
@@ -269,20 +284,52 @@ export default {
           uid: item.uid, //"2"
         }
       })
-      console.log('bannerList:',data);
     },
+
+    //banner-广告位 添加
     handleRowAdd (row, done) {
       this.formOptions.saveLoading = true
-      setTimeout(() => {
-        console.log(row)
-        this.$message({
-          message: '保存成功',
-          type: 'success'
-        });
-        done()
-        this.formOptions.saveLoading = false
-      }, 300);
+      let data =  postUrl(banner_add,{
+        title: row.title,
+        position: row.position,
+        user_id: row.user_id,
+        jump_url: row.jump_url,
+        jump_type: row.jump_type,
+        img_url: row.img_url,
+        start_time: new Date(row.start_time).getTime(), //开始时间 单位秒
+        end_time: new Date(row.end_time).getTime(), //结束时间 单位秒 end_time = 9999999999 设置最大值
+        w: row.w,
+        h: row.h,
+        sort: row.sort,
+      });
+      this.$message({
+        message: '添加成功',
+        type: 'success'
+      })
+      done()
+      this.formOptions.saveLoading = false
     },
+    
+    //banner-广告位 获取类型
+    async getBannerType () {
+      this.formOptions.saveLoading = true
+      let data = await postUrl(banner_query,{
+        parent_id:'34', //数据字典父id
+      });
+      this.jumpType = data.list.map(item =>{
+        return{
+          label:item.name,
+          value:item.code
+        }
+      })
+      this.formTemplate.jump_type.component.options = this.jumpType;
+      this.$message({
+        message: '查询成功',
+        type: 'success'
+      })
+      this.formOptions.saveLoading = false
+    },
+
     //banner-广告位 修改
     handleRowEdit ({index, row}, done) {
       this.formOptions.saveLoading = true
@@ -290,18 +337,18 @@ export default {
         console.log(index)
         console.log(row)
         let data =  postUrl(banner_update,{
-          title: "标题",
+          title: row.title,
           id: row.id,
-          user_id: "22",
-          img_url: "http://www.baidu.com",
-          jump_type: "url",
-          jump_url: "http://www.baidu.com",
-          dateRange:'[0=>11111111111111]',
-          h: 120,
-          w: 180,
-          sort: 1,
-          position: "002001002",
-          start_time: "0",
+          user_id: row.user_id,
+          img_url: row.img_url,
+          jump_type: row.jump_type,
+          jump_url: row.jump_url,
+          dateRange:row.dateRange,
+          h: row.h,
+          w: row.w,
+          sort: row.sort,
+          position: row.position,
+          start_time: row.start_time,
         });
         this.$message({
           message: '编辑成功',
@@ -326,6 +373,32 @@ export default {
         done()
       }, 300)
     },
+
+    //banner-广告位 返回banner广告位信息
+    getBannerInfo ({index, row}, done) {
+      setTimeout(() => {
+        console.log(index)
+        console.log(row)
+        let data =  postUrl(banner_info,{
+          id: row.id,
+        });
+        this.$message({
+          message: '删除成功',
+          type: 'success'
+        })
+        done()
+      }, 300)
+    },
+    //banner-广告位 返回banner广告图位置
+    async  getBannerPosition () {
+      let data = await postUrl(banner_position);
+      console.log('返回banner广告图位置:',data)
+      this.$message({
+        message: '删除成功',
+        type: 'success'
+      })
+    },
+    
     handleDialogCancel (done) {
       this.$message({
         message: '取消保存',
@@ -340,3 +413,4 @@ export default {
 }
 
 </script>
+by_Datatree_query

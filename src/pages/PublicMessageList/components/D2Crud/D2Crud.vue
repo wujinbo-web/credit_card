@@ -20,7 +20,6 @@ import D2Crud from '@d2-projects/d2-crud'
 import { postUrl } from '@/api'
 import { publicMessage_list, message_create } from '@/api/apiUrl'
 import { timeSite, numTime } from '@/tool/TimeTransition'
-
 Vue.use(D2Crud)
 
 export default {
@@ -48,7 +47,7 @@ export default {
           width: '180'
         },
         {
-          title: '概括',
+          title: '摘要',
           key: 'summary',
           width: '180'
         },
@@ -93,13 +92,13 @@ export default {
         },
         dtree_type: {
           title: '类型',
-          value: '',
+          value: 'announce',
           component: {
             span: 24
           }
         },
         summary: {
-          title: '概括',
+          title: '摘要',
           value: '',
           component: {
             span: 24
@@ -114,21 +113,21 @@ export default {
         },
         from_uid: {
           title: '发送者id',
-          value: null,
+          value: '3',//uid登陆时候传入，现在写死
           component: {
             span: 24
           }
         },
         to_uid: {
           title: '接收者id -2 全部',
-          value: null,
+          value: '-2',
           component: {
             span: 24
           }
         },
         send_time: {
           title: '发送时间',
-          value: new Date().getTime(),
+          value: new Date().getTime() / 1000,
           component: {
             span: 24
           }
@@ -146,7 +145,7 @@ export default {
         dtree_type: [ { required: true, message: '请输入类型', trigger: 'blur' } ],
         summary: [ { required: true, message: '请输入summary', trigger: 'blur' } ],
         content: [ { required: true, message: '请输入content', trigger: 'blur' } ],
-        from_uid: [ { required: true, message: '请输入发送者id', trigger: 'blur' } ],
+        // from_uid: [ { required: true, message: '请输入发送者id', trigger: 'blur' } ],
         to_uid: [ { required: true, message: '请输入接受者id', trigger: 'blur' } ],
         send_time: [ { required: true, message: '请输入发送时间', trigger: 'blur' } ],
         extra: [ { required: true, message: '请输入额外信息', trigger: 'blur' } ],
@@ -186,9 +185,7 @@ export default {
         page_size: this.pagination.pageSize,
         dtree_type: this.dtree_type,
       });
-      console.log('请求数据：',data);
-      this.data = data.list;
-      this.data.map(item => {
+      this.data = data.list.map(item => {
         return{
           createTime: timeSite(item.createTime),
           sendTime: timeSite(item.sendTime),
@@ -198,7 +195,7 @@ export default {
           summary: item.summary,
           title: item.title,
           id: item.id,
-          fromUid: item.fromUid,
+          fromUid: item.from_uid,
           toUid: item.toUid,
         }
       })

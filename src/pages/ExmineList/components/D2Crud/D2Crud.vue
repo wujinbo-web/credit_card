@@ -5,6 +5,8 @@
       :pagination="pagination"
       :form-options="formOptions"
       :loading="loading"
+      :data="data"
+      :columns="columns"
       :loading-options="loadingOptions"
       :rowHandle="rowHandle"
       @custom-emit-1='handleSuccess'

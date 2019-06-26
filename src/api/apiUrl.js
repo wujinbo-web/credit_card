@@ -24,14 +24,21 @@ export const exmine_success = 'by_UserIdCard_pass'
 export const exmine_reject = 'by_UserIdCard_deny';
 //用户登录
 export const user_login = 'by_UserLoginSession_loginByMobilePassword';
+
 //banner列表
 export const banner_list = 'by_Banners_query'
 //banner广告位删除
 export const banner_delete = 'by_Banners_delete'
 //banner广告位修改
 export const banner_update = 'by_Banners_update'
-//banner广告位添加
-// export const banner_delete = 'by_Banners_delete'
+// //banner广告位添加
+export const banner_add = 'by_Banners_create'
+//banner 获取跳转类型
+export const banner_query = 'by_Datatree_query'
+//banner 返回banner广告位信息
+export const banner_info = 'by_Banners_bannerInfo'
+//banner 返回banner广告图位置
+export const banner_position = 'by_Banners_queryPosition'
 
 
 //意见反馈列表

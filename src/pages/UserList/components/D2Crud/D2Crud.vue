@@ -32,16 +32,6 @@
           </el-form-item>
         </el-form>
       </el-dialog>
-
-      <el-dialog
-        width="400"
-        :visible.sync="dialogVisible3">
-        <d2-crud
-          ref="d2Crud2"
-          title="支付通道关联会员配置查询"
-          :columns="columns2"
-          :data="data2"/>
-      </el-dialog>
     </d2-crud>
   </div>
 </template>
@@ -91,63 +81,6 @@ export default {
         },
       ],
       data: [],
-      columns2: [
-        {
-          title: 'channel_code',
-          key: 'channel_code',
-          align:'center',
-          width: '80'
-        },
-        {
-          title: 'id',
-          key: 'id',
-          align:'center',
-          width: '80'
-        },
-        {
-          title: '用户ID',
-          key: 'uid',
-          align:'center',
-          width: '80'
-        },
-        {
-          title: 'start_amt',
-          key: 'start_amt',
-          align:'center',
-          width: '100'
-        },
-        {
-          title: 'end_amt',
-          key: 'end_amt',
-          align:'center',
-          width: '100'
-        },
-        {
-          title: 'enable',
-          key: 'enable',
-          align:'center',
-          width: '80'
-        },
-        {
-          title: 'fixed_rate',
-          key: 'fixed_rate',
-          align:'center',
-          width: '100'
-        },
-        {
-          title: 'rate',
-          key: 'rate',
-          align:'center',
-          width: '80'
-        },
-        {
-          title: '同步',
-          key: 'sync',
-          align:'center',
-          width: '80'
-        },
-      ],
-      data2: [],
       addButton: {
         icon: 'el-icon-plus',
         size: 'small'
@@ -167,7 +100,7 @@ export default {
           },
           {
             text: '查看手续费',
-            type: 'info',
+            type: 'primary',
             size: 'small',
             emit: 'custom-emit-3',
             show(){
@@ -227,8 +160,8 @@ export default {
         sid:null,
       },
       dialogVisible: false,
-      dialogVisible3: false,
       queryFeeData:[],
+      isSetFee:true,
     }
   },
   mounted(){
@@ -308,12 +241,7 @@ export default {
     },
     //查看用户手续费
     async userqueryFee({ row, index }){
-      let data = await postUrl(user_queryFee,{
-        user_id: row.id
-      });
-      this.data2 = data;
-      this.dialogVisible3 = true;
-      console.log('查看用户手续费：',data);
+      this.$router.push({path: '/manage/userfee', query: {user_id: row.id}})
     },
   }
 }

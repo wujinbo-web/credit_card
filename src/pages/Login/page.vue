@@ -104,12 +104,17 @@ export default {
       ],
       // 表单
       formLogin: {
+        // mobile: '',
+        // password: '1234567890',
         username: 'admin',
         password: 'admin',
         code: 'v9am'
       },
       // 校验
       rules: {
+        // mobile: [
+        //   { required: true, message: '请输入手机号码', trigger: 'blur' }
+        // ],
         username: [
           { required: true, message: '请输入手机号码', trigger: 'blur' }
         ],
@@ -139,14 +144,14 @@ export default {
       this.time = dayjs().format('HH:mm:ss')
     },
     // 提交登录信息
-    submit () {
-      this.$refs.loginForm.validate((valid) => {
+    async submit () {
+      this.$refs.loginForm.validate(async (valid) => {
         if (valid) {
           console.log(valid);
           // 登录
           // 注意 这里的演示没有传验证码
           // 具体需要传递的数据请自行修改代码
-          // let res = postUrl(user_login,{
+          // let res =  await postUrl(user_login,{
           //   mobile: this.formLogin.mobile,
           //   password: this.formLogin.password,
           //   device_token:"tt", //设备标识
@@ -155,15 +160,19 @@ export default {
           // })
           this.login({
             username: this.formLogin.username,
-            password: this.formLogin.password
-          })  
+            password: this.formLogin.password,
+          })
+          
+          
+          // sessionStorage.setItem('loginToken',JSON.stringify(res.data.token));
+          // sessionStorage.setItem('loginData',JSON.stringify(this.mobile));
             .then(() => {
               // // 重定向对象不存在则返回顶层路径
               this.$router.replace(this.$route.query.redirect || '/')
             })
-        } else {
-          // 登录表单校验失败
-          this.$message.error('表单校验失败')
+        }  else {
+          console.log('error submit!!');
+          return false;
         }
       })
     }

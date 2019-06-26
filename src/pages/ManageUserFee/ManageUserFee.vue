@@ -1,7 +1,7 @@
 <template>
   <!-- d2-container 文档 https://doc.d2admin.fairyever.com/zh/sys-components/container.html -->
   <d2-container class="page-ManageUserFee">
-    <template slot="header">用户手续费管理</template>
+    <template slot="header">查看手续费</template>
     <d2-crud/>
   </d2-container>
 </template>

@@ -40,18 +40,18 @@ const asideMenuConfig = [
     path: '/publicmessage/list',
     icon: 'home',
   },
-  {
-    name: '用户手续费管理',
-    path: '/manage/userfee',
-    icon: 'home',
-  },
+  // {
+  //   name: '用户手续费管理',
+  //   path: '/manage/userfee',
+  //   icon: 'home',
+  // },
   {
     name: '支付列表',
     path: '/payment/list',
     icon: 'home',
   },
   {
-    name: 'OrderList',
+    name: '订单列表',
     path: '/order/list',
     icon: 'home',
   },
