@@ -111,13 +111,13 @@ export default {
             span: 24
           }
         },
-        from_uid: {
-          title: '发送者id',
-          value: '3',//uid登陆时候传入，现在写死
-          component: {
-            span: 24
-          }
-        },
+        // from_uid: {
+        //   title: '发送者id',
+        //   value: '3',//uid登陆时候传入，现在写死
+        //   component: {
+        //     span: 24
+        //   }
+        // },
         to_uid: {
           title: '接收者id -2 全部',
           value: '-2',
@@ -203,6 +203,7 @@ export default {
     handleRowAdd (row, done) {
       this.formOptions.saveLoading = true
       setTimeout(() => {
+        row.from_uid = '3';
         console.log(row)
         let data = postUrl(message_create,row);
         this.$message({

@@ -12,10 +12,11 @@
       @custom-emit-4='updateUserFeeNormal'
       @dialog-cancel="handleDialogCancel"
       /> -->
-          <el-button v-if="isSetFee" @click="setUserqueryFeeQuick2">快捷设置</el-button>
-          <el-button type="primary" v-if="isSetFee" @click="setUserFeeNormal2">代扣代付设置</el-button>
-          <el-button v-if="!isSetFee" @click="updateUserFeeQuick2">快捷更新</el-button>
-          <el-button type="primary" v-if="!isSetFee" @click="updateUserFeeNormal2">代扣代付更新</el-button>
+          <el-button v-if="isSetFee"  @click="setUserqueryFeeQuick2">快捷设置</el-button>
+          <el-button v-if="isSetFee" type="primary"  @click="setUserFeeNormal2">代扣代付设置</el-button>
+
+          <el-button @click="updateUserFeeQuick2">快捷更新</el-button>
+          <el-button type="primary" @click="updateUserFeeNormal2">代扣代付更新</el-button>
       <d2-crud
         ref="d2Crud2"
         :columns="columns2" 

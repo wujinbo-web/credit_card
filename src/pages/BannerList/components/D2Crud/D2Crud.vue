@@ -19,253 +19,271 @@
 </template>
 
 <script>
-import Vue from 'vue'
-import D2Crud from '@d2-projects/d2-crud'
-import { postUrl } from '@/api'
-import { banner_list, banner_delete, banner_add, banner_update, banner_query,banner_info,banner_position } from '@/api/apiUrl'
-import { timeSite, numTime } from '@/tool/TimeTransition'
-Vue.use(D2Crud)
+import Vue from "vue";
+import D2Crud from "@d2-projects/d2-crud";
+import { postUrl } from "@/api";
+import {
+  banner_list,
+  banner_delete,
+  banner_add,
+  banner_update,
+  banner_query,
+  banner_info,
+  banner_position
+} from "@/api/apiUrl";
+import { timeSite, numTime } from "@/tool/TimeTransition";
+import MyUpload from "./MyUpload";
+import Img from './Img';
+Vue.use(D2Crud);
 
 export default {
+  components: {
+    MyUpload
+  },
   data() {
     return {
+      jumpType: [], //跳转类型
       columns: [
         {
-          title: 'ID',
-          key: 'id',
-          align:'center',
-          width: '80'
+          title: "位置",
+          key: "position",
+          align: "center",
+          width: "180",
+          filters: [],
+          filterMethod(value, row) {
+            console.log(row);
+            return row.position == value;
+          },
+          filterPlacement: "bottom-end"
         },
         {
-          title: '用户id',
-          key: 'uid',
-          align:'center',
-          width: '80'
+          title: "alis",
+          key: "alis",
+          align: "center",
+          width: "180"
         },
         {
-          title: '排序',
-          key: 'sort',
-          align:'center',
-          width: '80'
+          title: "ID",
+          key: "id",
+          align: "center",
+          width: "80"
         },
         {
-          title: '点击次数',
-          key: 'click_nums',
-          align:'center',
-          width: '80'
+          title: "用户id",
+          key: "uid",
+          align: "center",
+          width: "80"
         },
         {
-          title: '创建时间',
-          key: 'create_time',
-          align:'center',
-          width: '180'
+          title: "排序",
+          key: "sort",
+          align: "center",
+          width: "80"
         },
         {
-          title: '截止时间',
-          key: 'end_time',
-          align:'center',
-          width: '180'
+          title: "点击次数",
+          key: "click_nums",
+          align: "center",
+          width: "80"
         },
         {
-          title: '高度',
-          key: 'h',
-          align:'center',
-          width: '80'
+          title: "创建时间",
+          key: "create_time",
+          align: "center",
+          width: "180"
         },
         {
-          title: '宽度',
-          key: 'w',
-          align:'center',
-          width: '80'
+          title: "截止时间",
+          key: "end_time",
+          align: "center",
+          width: "180"
         },
         {
-          title: '标题',
-          key: 'title',
-          align:'center',
-          width: '180'
+          title: "高度",
+          key: "h",
+          align: "center",
+          width: "80"
         },
         {
-          title: '图片路径',
-          key: 'img_url',
-          align:'center',
-          width: '180'
+          title: "宽度",
+          key: "w",
+          align: "center",
+          width: "80"
         },
         {
-          title: '跳转网址',
-          key: 'jump_url',
-          align:'center',
-          width: '180'
+          title: "标题",
+          key: "title",
+          align: "center",
+          width: "180"
         },
         {
-          title: '跳转类型',
-          key: 'jump_type',
-          align:'center',
-          width: '180'
+          title: "图片路径",
+          key: "img_url",
+          align: "center",
+          width: "180",
+          component:{
+            name: Img,
+          }
         },
         {
-          title: '位置',
-          key: 'position',
-          align:'center',
-          width: '180'
+          title: "跳转网址",
+          key: "jump_url",
+          align: "center",
+          width: "180"
         },
         {
-          title: 'alis',
-          key: 'alis',
-          align:'center',
-          width: '180'
-        },
+          title: "跳转类型",
+          key: "jump_type",
+          align: "center",
+          width: "180"
+        }
       ],
       data: [],
       addButton: {
-        icon: 'el-icon-plus',
-        size: 'small'
+        icon: "el-icon-plus",
+        size: "small"
       },
       rowHandle: {
-        columnHeader: '编辑表格',
-        align:'center',
-        width: '180',
+        columnHeader: "编辑表格",
+        align: "center",
+        width: "180",
         edit: {
-          text: '编辑',
-          size: 'small',
-          show (index, row) {
-            return true
+          text: "编辑",
+          size: "small",
+          show(index, row) {
+            return true;
           }
         },
         remove: {
-          size: 'small',
-          text: '删除',
-          show (index, row) {
-            return true
+          size: "small",
+          text: "删除",
+          show(index, row) {
+            return true;
           }
         }
       },
-      jumpType:[],//跳转类型
       formTemplate: {
         title: {
-          title: '标题',
-          value: '',
+          title: "标题",
+          value: "",
           component: {
             span: 12
           }
         },
-        user_id: {
-          title: '用户id',
-          value: '2',
-          component: {
-            span: 24
-          }
-        },
         jump_url: {
-          title: '跳转网址',
-          value: '',
+          title: "跳转网址",
+          value: "",
           component: {
             span: 24
           }
         },
         jump_type: {
-          title: '跳转类型',
-          value: '',
-          component: {
-            name: 'el-select',
-            options:[],
-            size: 'small'
-          }
-        },
-        img_url: {
-          title: '图片路径',
-          value: '',
+          title: "跳转类型",
+          value: "url",
           component: {
             span: 24
           }
         },
+        img_url: {
+          title: "图片上传",
+          value: "",
+          component: {
+            name:MyUpload,
+          }
+        },
         start_time: {
-          title: '开始时间',
-          value: '',
+          title: "开始时间",
+          value: "",
           component: {
             span: 24,
-            name: 'el-date-picker',
-            type:"datetime"
-          },
+            name: "el-date-picker",
+            type: "datetime"
+          }
         },
         end_time: {
-          title: '结束时间',
-          value: '',
+          title: "结束时间",
+          value: "",
           component: {
             span: 24,
-            name: 'el-date-picker',
-            type:"datetime"
-          },
+            name: "el-date-picker",
+            type: "datetime"
+          }
         },
         w: {
-          title: '宽',
-          value: '100',
+          title: "宽",
+          value: "100",
           component: {
             span: 24
           }
         },
         h: {
-          title: '高',
-          value: '100',
+          title: "高",
+          value: "100",
           component: {
             span: 24
           }
         },
         sort: {
-          title: '排序',
-          value: '',
+          title: "排序",
+          value: "",
           component: {
             span: 24
           }
         },
         id: {
-          title: 'id',
-          value: '',
+          title: "id",
+          value: "",
           component: {
             span: 24
           }
         },
         position: {
-          title: '位置',
-          value: '',
+          title: "位置",
+          value: "",
           component: {
-            span: 24
+            name: "el-select",
+            options: [],
+            size: "small"
           }
-        },
+        }
       },
       formRules: {
-        date: [ { required: true, message: '请输入日期', trigger: 'blur' } ],
-        name: [ { required: true, message: '请输入姓名', trigger: 'change' } ],
-        address: [ { required: true, message: '请输入地址', trigger: 'blur' } ]
+        date: [{ required: true, message: "请输入日期", trigger: "blur" }],
+        name: [{ required: true, message: "请输入姓名", trigger: "change" }],
+        address: [{ required: true, message: "请输入地址", trigger: "blur" }]
       },
       formOptions: {
-        labelWidth: '80px',
-        labelPosition: 'left',
+        labelWidth: "80px",
+        labelPosition: "left",
         saveLoading: false,
         gutter: 20
       },
       pagination: {
-        currentPage:1,
-        pageSize:10,
-        total:1,
+        currentPage: 1,
+        pageSize: 10,
+        total: 1
       }
-    }
+    };
   },
-  mounted(){
+  mounted() {
     this.getBannerList();
     this.getBannerType();
-    this.getBannerPosition();//banner-广告位 返回banner广告图位置
-    this.getBannerPosition();//banner-广告位 返回banner广告图位置
+    this.getBannerPosition(); //banner-广告位 返回banner广告图位置
+    this.getBannerInfo(); //返回banner广告位信息
+  },
+  watch:{
+
   },
   methods: {
     //获取banner列表
-    async  getBannerList(){
-      let data = await postUrl(banner_list,{
+    async getBannerList() {
+      let data = await postUrl(banner_list, {
         page_index: this.pagination.currentPage,
-        page_size: this.pagination.pageSize,
+        page_size: this.pagination.pageSize
         // user_id://用户id 搜索用
         // position: //位置 搜索用
         // nowTime:  //时间 搜索用
-      })
+      });
       this.data = data.map(item => {
         return {
           alis: item.alis, //标题
@@ -273,26 +291,27 @@ export default {
           create_time: timeSite(item.create_time), //创建时间
           end_time: timeSite(item.end_time), //截止时间
           h: item.h, //高
-          w: item.w,//宽 180
+          w: item.w, //宽 180
           id: item.id, //id
           img_url: item.img_url, //图片地址
           jump_type: item.jump_type, //”url“
           jump_url: item.jump_url, // "http://www.baidu.com"
-          position: item.position,//位置 "002001002"
-          sort: item.sort,// 1
+          position: item.position, //位置 "002001002"
+          sort: item.sort, // 1
           title: item.title, // "标题"
-          uid: item.uid, //"2"
-        }
-      })
+          uid: item.uid //"2"
+        };
+      });
     },
 
     //banner-广告位 添加
-    handleRowAdd (row, done) {
-      this.formOptions.saveLoading = true
-      let data =  postUrl(banner_add,{
+    handleRowAdd(row, done) {
+      console.log(row)
+      this.formOptions.saveLoading = true;
+      let data = postUrl(banner_add, {
         title: row.title,
         position: row.position,
-        user_id: row.user_id,
+        user_id: "2",
         jump_url: row.jump_url,
         jump_type: row.jump_type,
         img_url: row.img_url,
@@ -300,117 +319,103 @@ export default {
         end_time: new Date(row.end_time).getTime(), //结束时间 单位秒 end_time = 9999999999 设置最大值
         w: row.w,
         h: row.h,
-        sort: row.sort,
+        sort: row.sort
       });
       this.$message({
-        message: '添加成功',
-        type: 'success'
-      })
-      done()
-      this.formOptions.saveLoading = false
+        message: "添加成功",
+        type: "success"
+      });
+      done();
+      this.formOptions.saveLoading = false;
     },
-    
+
     //banner-广告位 获取类型
-    async getBannerType () {
-      this.formOptions.saveLoading = true
-      let data = await postUrl(banner_query,{
-        parent_id:'34', //数据字典父id
+    async getBannerType() {
+      this.formOptions.saveLoading = true;
+      let data = await postUrl(banner_query, {
+        parent_id: "34" //数据字典父id
       });
-      this.jumpType = data.list.map(item =>{
-        return{
-          label:item.name,
-          value:item.code
-        }
-      })
-      this.formTemplate.jump_type.component.options = this.jumpType;
-      this.$message({
-        message: '查询成功',
-        type: 'success'
-      })
-      this.formOptions.saveLoading = false
+      this.jumpType = data.list.map(item => {
+        return {
+          label: item.name,
+          value: item.code
+        };
+      });
+      this.formTemplate.position.component.options = this.jumpType;
+      this.columns[0].filters = data.list.map(item => {
+        return {
+          text: item.code,
+          value: item.code
+        };
+      });
+      this.formOptions.saveLoading = false;
     },
 
     //banner-广告位 修改
-    handleRowEdit ({index, row}, done) {
-      this.formOptions.saveLoading = true
+    handleRowEdit({ index, row }, done) {
+      this.formOptions.saveLoading = true;
       setTimeout(() => {
-        console.log(index)
-        console.log(row)
-        let data =  postUrl(banner_update,{
+        console.log(index);
+        console.log(row);
+        let data = postUrl(banner_update, {
           title: row.title,
           id: row.id,
           user_id: row.user_id,
           img_url: row.img_url,
           jump_type: row.jump_type,
           jump_url: row.jump_url,
-          dateRange:row.dateRange,
+          dateRange: row.dateRange,
           h: row.h,
           w: row.w,
           sort: row.sort,
           position: row.position,
-          start_time: row.start_time,
+          start_time: row.start_time
         });
         this.$message({
-          message: '编辑成功',
-          type: 'success'
-        })
-        done()
-        this.formOptions.saveLoading = false
-      }, 300)
+          message: "编辑成功",
+          type: "success"
+        });
+        done();
+        this.formOptions.saveLoading = false;
+      }, 300);
     },
     //banner-广告位 删除
-    handleRowRemove ({index, row}, done) {
+    handleRowRemove({ index, row }, done) {
       setTimeout(() => {
-        console.log(index)
-        console.log(row)
-        let data =  postUrl(banner_delete,{
-          id: row.id,
+        console.log(index);
+        console.log(row);
+        let data = postUrl(banner_delete, {
+          id: row.id
         });
         this.$message({
-          message: '删除成功',
-          type: 'success'
-        })
-        done()
-      }, 300)
+          message: "删除成功",
+          type: "success"
+        });
+        done();
+      }, 300);
     },
 
     //banner-广告位 返回banner广告位信息
-    getBannerInfo ({index, row}, done) {
-      setTimeout(() => {
-        console.log(index)
-        console.log(row)
-        let data =  postUrl(banner_info,{
-          id: row.id,
-        });
-        this.$message({
-          message: '删除成功',
-          type: 'success'
-        })
-        done()
-      }, 300)
+    async getBannerInfo(row) {
+      console.log(row);
+      let data = await postUrl(banner_info, {
+        id: "3"
+      });
+      console.log("返回banner广告位信息:", data);
     },
     //banner-广告位 返回banner广告图位置
-    async  getBannerPosition () {
+    async getBannerPosition() {
       let data = await postUrl(banner_position);
-      console.log('返回banner广告图位置:',data)
-      this.$message({
-        message: '删除成功',
-        type: 'success'
-      })
+      console.log("返回banner广告图位置:", data);
     },
-    
-    handleDialogCancel (done) {
+
+    handleDialogCancel(done) {
       this.$message({
-        message: '取消保存',
-        type: 'warning'
+        message: "取消保存",
+        type: "warning"
       });
-      done()
-    },
-    handleSelectionChange (selection) {
-      console.log('已选id',selection.id)
+      done();
     }
   }
-}
-
+};
 </script>
-by_Datatree_query

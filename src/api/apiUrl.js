@@ -1,5 +1,5 @@
 //用户列表
-export const user_list = 'by_UserAccount_query'
+export const user_list = 'by_UserAccount_queryInfo'
 //设置用户等级
 export const user_setGrade = 'by_UserGrade_setGrade'
 //查看用户手续费

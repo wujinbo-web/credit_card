@@ -39,6 +39,7 @@
 <script>
 import Vue from 'vue'
 import D2Crud from '@d2-projects/d2-crud'
+import Img from './Img'
 import { postUrl } from '@/api'
 import { user_list, user_add,user_setGrade,set_queryFee,user_queryFee} from '@/api/apiUrl'
 import { timeSite, numTime } from '@/tool/TimeTransition'
@@ -54,6 +55,27 @@ export default {
           key: 'country_no',
           align:'center',
           width: '80'
+        },
+        {
+          title: '昵称',
+          key: '_nickname',
+          align:'center',
+          width: '120'
+        },
+        {
+          title: '电话号码',
+          key: 'mobile',
+          align:'center',
+          width: '120'
+        },
+        {
+          title: '头像',
+          key: '_head',
+          align:'center',
+          width: '80',
+          component:{
+            name: Img,
+          }
         },
         {
           title: '项目ID',
@@ -74,8 +96,8 @@ export default {
           width: '180'
         },
         {
-          title: '电话',
-          key: 'mobile',
+          title: '上次登录时间',
+          key: 'last_login_time',
           align:'center',
           width: '160'
         },
@@ -147,11 +169,6 @@ export default {
         saveLoading: false,
         gutter: 20
       },
-      pagination: {
-        currentPage: 1,
-        pageSize: 10,
-        total: 0,
-      },
       loading: false,
       form:{
         grade_id: null,//1: 普通用户 2: VIP1
@@ -162,10 +179,15 @@ export default {
       dialogVisible: false,
       queryFeeData:[],
       isSetFee:true,
+      pagination: {
+        currentPage: 1,
+        pageSize: 5,
+        total: 1000
+      },
     }
   },
   mounted(){
-    this.getUserList();
+    // this.getUserList();
   },
   methods: {
     //提交表单
@@ -194,15 +216,18 @@ export default {
         page_index: this.pagination.currentPage, //页码
         page_size: this.pagination.pageSize, //每页个数
       });
+      this.pagination.total = 1000;
+      console.log(this.pagination.total);
       this.loading = false;
-      //页码
-      this.pagination.total = data.count;
       //渲染数据
       this.data = data.list.map(item => {
         return{
           country_no: item.country_no,
           create_time: timeSite(item.create_time),
           id: item.id,
+          _head: item._head,
+          _nickname: item._nickname,
+          last_login_time:  timeSite(item.last_login_time),
           mobile: item.mobile,
           project_id: item.project_id,
         }
