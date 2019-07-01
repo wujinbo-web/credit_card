@@ -1,12 +1,11 @@
 <template>
   <div class="d2-crud">
+    <el-button slot="header" style="margin-bottom: 5px" @click="addRow">新增</el-button>
     <d2-crud
       ref="d2Crud"
       :columns="columns"
       :data="data"
-      add-mode
-      :add-button="addButton"
-      :form-template="formTemplate"
+      :add-template="addTemplate"
       :form-rules="formRules"
       :form-options="formOptions"
       @dialog-cancel="handleDialogCancel"
@@ -78,11 +77,7 @@ export default {
         },
       ],
       data: [],
-      addButton: {
-        icon: 'el-icon-plus',
-        size: 'small'
-      },
-      formTemplate: {
+      addTemplate: {
         title: {
           title: '标题',
           value: '',
@@ -147,7 +142,7 @@ export default {
         content: [ { required: true, message: '请输入content', trigger: 'blur' } ],
         // from_uid: [ { required: true, message: '请输入发送者id', trigger: 'blur' } ],
         to_uid: [ { required: true, message: '请输入接受者id', trigger: 'blur' } ],
-        send_time: [ { required: true, message: '请输入发送时间', trigger: 'blur' } ],
+        // send_time: [ { required: true, message: '请输入发送时间', trigger: 'blur' } ],
         extra: [ { required: true, message: '请输入额外信息', trigger: 'blur' } ],
       },
       formOptions: {
@@ -162,16 +157,6 @@ export default {
         total:1,
       },
       dtree_type:'002002',
-      test_data:{
-        title:'公告',
-        dtree_type:'002002',
-        summary:'支出成功',
-        content:'金额支付成功',
-        from_uid:'2',
-        to_uid:'-2',//-2表示全部
-        send_time:'1559715607',
-        extra:'111',
-      },
     }
   },
   mounted(){
@@ -198,6 +183,12 @@ export default {
           fromUid: item.from_uid,
           toUid: item.toUid,
         }
+      })
+    },
+    // 普通的新增
+    addRow () {
+      this.$refs.d2Crud.showDialog({
+        mode: 'add'
       })
     },
     handleRowAdd (row, done) {

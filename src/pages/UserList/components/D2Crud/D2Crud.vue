@@ -4,20 +4,19 @@
       ref="d2Crud"
       :columns="columns"
       :data="data"
-      :pagination="pagination"
       :loading="loading"
       add-mode
       :add-button="addButton"
       :form-template="formTemplate"
       :form-options="formOptions"
       :rowHandle="rowHandle"
+      :pagination="pagination"
       @custom-emit-1='setUserGrade'
       @custom-emit-3='userqueryFee'
-      @pagination-current-change="paginationCurrentChange"
       @row-add="handleRowAdd"
+      @pagination-current-change="paginationCurrentChange"
       @dialog-cancel="handleDialogCancel"
       />
-
       <el-dialog
         title="设置用户等级"
         width="1000"
@@ -181,13 +180,13 @@ export default {
       isSetFee:true,
       pagination: {
         currentPage: 1,
-        pageSize: 5,
-        total: 1000
+        pageSize: 10,
+        total: 1
       },
     }
   },
   mounted(){
-    // this.getUserList();
+    this.getUserList();
   },
   methods: {
     //提交表单
@@ -216,8 +215,7 @@ export default {
         page_index: this.pagination.currentPage, //页码
         page_size: this.pagination.pageSize, //每页个数
       });
-      this.pagination.total = 1000;
-      console.log(this.pagination.total);
+      this.pagination.total = Number(data.count);
       this.loading = false;
       //渲染数据
       this.data = data.list.map(item => {
@@ -254,10 +252,11 @@ export default {
       done()
     },
 
-    //分页操作
+    //切换页码
     paginationCurrentChange (currentPage) {
-      this.pagination.currentPage = currentPage
-      this.getUserList()
+      console.log(currentPage);
+        this.pagination.currentPage = currentPage
+        this.getUserList()
     },
     //设置用户等级
     setUserGrade({ row, index }){

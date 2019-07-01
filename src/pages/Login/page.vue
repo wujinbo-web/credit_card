@@ -29,7 +29,7 @@
             <el-card shadow="never">
               <el-form ref="loginForm" label-position="top" :rules="rules" :model="formLogin" size="default">
                 <el-form-item prop="username">
-                  <el-input v-model="formLogin.username" placeholder="手机号码">
+                  <el-input v-model="formLogin.mobile" placeholder="手机号码">
                     <i slot="prepend" class="fa fa-user-circle-o"></i>
                   </el-input>
                 </el-form-item>
@@ -104,20 +104,20 @@ export default {
       ],
       // 表单
       formLogin: {
-        // mobile: '',
-        // password: '1234567890',
-        username: 'admin',
-        password: 'admin',
+        mobile: '',
+        password: '1234567890',
+        // username: 'admin',
+        // password: 'admin',
         code: 'v9am'
       },
       // 校验
       rules: {
-        // mobile: [
-        //   { required: true, message: '请输入手机号码', trigger: 'blur' }
-        // ],
-        username: [
+        mobile: [
           { required: true, message: '请输入手机号码', trigger: 'blur' }
         ],
+        // username: [
+        //   { required: true, message: '请输入手机号码', trigger: 'blur' }
+        // ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ],
@@ -159,17 +159,15 @@ export default {
           //   loginInfo:"pc", //登录额外信息，可传空字符串
           // })
           this.login({
-            username: this.formLogin.username,
+            // username: this.formLogin.username,
+            vm: this,
+            mobile: this.formLogin.mobile,
             password: this.formLogin.password,
           })
-          
-          
-          // sessionStorage.setItem('loginToken',JSON.stringify(res.data.token));
-          // sessionStorage.setItem('loginData',JSON.stringify(this.mobile));
-            .then(() => {
-              // // 重定向对象不存在则返回顶层路径
-              this.$router.replace(this.$route.query.redirect || '/')
-            })
+            // .then(() => {
+            //   // // 重定向对象不存在则返回顶层路径
+            //   this.$router.replace(this.$route.query.redirect || '/')
+            // })
         }  else {
           console.log('error submit!!');
           return false;

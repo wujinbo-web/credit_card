@@ -1,19 +1,21 @@
 <template>
   <div class="d2-crud">
+    <el-button slot="header" style="margin-bottom: 5px" @click="addRow">新增</el-button>
     <d2-crud
       ref="d2Crud"
       :columns="columns"
       :data="data"
-      add-mode
-      :add-button="addButton"
       :rowHandle="rowHandle"
-      :form-template="formTemplate"
-      :form-rules="formRules"
       :form-options="formOptions"
+      :pagination="pagination"
+      :add-template="addTemplate"
+      :edit-template="editTemplate"
       @row-add="handleRowAdd"
       @row-edit="handleRowEdit"
       @row-remove="handleRowRemove"
+      @dialog-open="handleDialogOpen"
       @dialog-cancel="handleDialogCancel"
+      @pagination-current-change="paginationCurrentChange"
       />
   </div>
 </template>
@@ -51,7 +53,7 @@ export default {
           width: "180",
           filters: [],
           filterMethod(value, row) {
-            console.log(row);
+            console.log('位置',row);
             return row.position == value;
           },
           filterPlacement: "bottom-end"
@@ -162,7 +164,7 @@ export default {
           }
         }
       },
-      formTemplate: {
+      addTemplate: {
         title: {
           title: "标题",
           value: "",
@@ -247,22 +249,101 @@ export default {
           }
         }
       },
-      formRules: {
-        date: [{ required: true, message: "请输入日期", trigger: "blur" }],
-        name: [{ required: true, message: "请输入姓名", trigger: "change" }],
-        address: [{ required: true, message: "请输入地址", trigger: "blur" }]
+      editTemplate: {
+        title: {
+          title: "标题",
+          value: "",
+          component: {
+            span: 12
+          }
+        },
+        jump_url: {
+          title: "跳转网址",
+          value: "",
+          component: {
+            span: 24
+          }
+        },
+        jump_type: {
+          title: "跳转类型",
+          value: "url",
+          component: {
+            span: 24
+          }
+        },
+        img_url: {
+          title: "图片上传",
+          value: "",
+          component: {
+            name:MyUpload,
+          }
+        },
+        start_time: {
+          title: "开始时间",
+          value: "",
+          component: {
+            span: 24,
+            name: "el-date-picker",
+            type: "datetime"
+          }
+        },
+        end_time: {
+          title: "结束时间",
+          value: "",
+          component: {
+            span: 24,
+            name: "el-date-picker",
+            type: "datetime"
+          }
+        },
+        w: {
+          title: "宽",
+          value: "100",
+          component: {
+            span: 24
+          }
+        },
+        h: {
+          title: "高",
+          value: "100",
+          component: {
+            span: 24
+          }
+        },
+        sort: {
+          title: "排序",
+          value: "",
+          component: {
+            span: 24
+          }
+        },
+        id: {
+          title: "id",
+          value: "",
+          component: {
+            span: 24
+          }
+        },
+        position: {
+          title: "位置",
+          value: "",
+          component: {
+            name: "el-select",
+            options: [],
+            size: "small"
+          }
+        }
       },
       formOptions: {
         labelWidth: "80px",
         labelPosition: "left",
         saveLoading: false,
-        gutter: 20
       },
       pagination: {
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 100,
         total: 1
-      }
+      },
     };
   },
   mounted() {
@@ -270,9 +351,6 @@ export default {
     this.getBannerType();
     this.getBannerPosition(); //banner-广告位 返回banner广告图位置
     this.getBannerInfo(); //返回banner广告位信息
-  },
-  watch:{
-
   },
   methods: {
     //获取banner列表
@@ -284,6 +362,7 @@ export default {
         // position: //位置 搜索用
         // nowTime:  //时间 搜索用
       });
+      this.pagination.total = Number(data.length);
       this.data = data.map(item => {
         return {
           alis: item.alis, //标题
@@ -304,6 +383,18 @@ export default {
       });
     },
 
+    handleDialogOpen ({ mode }) {
+      this.$message({
+        message: '打开模态框，模式为：' + mode,
+        type: 'success'
+      })
+    },
+    // 普通的新增
+    addRow () {
+      this.$refs.d2Crud.showDialog({
+        mode: 'add'
+      })
+    },
     //banner-广告位 添加
     handleRowAdd(row, done) {
       console.log(row)
@@ -341,7 +432,8 @@ export default {
           value: item.code
         };
       });
-      this.formTemplate.position.component.options = this.jumpType;
+      this.addTemplate.position.component.options = this.jumpType;
+      this.editTemplate.position.component.options = this.jumpType;
       this.columns[0].filters = data.list.map(item => {
         return {
           text: item.code,
@@ -352,32 +444,30 @@ export default {
     },
 
     //banner-广告位 修改
-    handleRowEdit({ index, row }, done) {
+    handleRowEdit({ index, row }) {
       this.formOptions.saveLoading = true;
-      setTimeout(() => {
-        console.log(index);
-        console.log(row);
-        let data = postUrl(banner_update, {
-          title: row.title,
-          id: row.id,
-          user_id: row.user_id,
-          img_url: row.img_url,
-          jump_type: row.jump_type,
-          jump_url: row.jump_url,
-          dateRange: row.dateRange,
-          h: row.h,
-          w: row.w,
-          sort: row.sort,
-          position: row.position,
-          start_time: row.start_time
-        });
-        this.$message({
-          message: "编辑成功",
-          type: "success"
-        });
-        done();
-        this.formOptions.saveLoading = false;
-      }, 300);
+      console.log(index);
+      console.log(row);
+      let data = postUrl(banner_update, {
+        title: row.title,
+        id: row.id,
+        user_id: row.user_id,
+        img_url: row.img_url,
+        jump_type: row.jump_type,
+        jump_url: row.jump_url,
+        start_time: new Date(row.start_time).getTime(), //开始时间 单位秒
+        end_time: new Date(row.end_time).getTime(), //结束时间 单位秒 end_time = 9999999999 设置最大值
+        h: row.h,
+        w: row.w,
+        sort: row.sort,
+        position: row.position,
+        start_time: row.start_time
+      });
+      this.$message({
+        message: "编辑成功",
+        type: "success"
+      });
+      this.formOptions.saveLoading = false;
     },
     //banner-广告位 删除
     handleRowRemove({ index, row }, done) {
@@ -415,7 +505,13 @@ export default {
         type: "warning"
       });
       done();
-    }
+    },
+    //切换页码
+    paginationCurrentChange (currentPage) {
+      console.log(currentPage);
+        this.pagination.currentPage = currentPage
+        this.getBannerList()
+    },
   }
 };
 </script>

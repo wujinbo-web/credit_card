@@ -9,27 +9,22 @@ export default {
     /**
      * @description 登录
      * @param {Object} param context
-     * @param {Object} param username {String} 用户账号
+     * @param {Object} param mobile {String} 用户账号
      * @param {Object} param password {String} 密码
      * @param {Object} param route {Object} 登录成功后定向的路由对象 任何 vue-router 支持的格式
      */
     login ({ dispatch }, {
-      username = '',
-      password = '',
-      // mobile = '',
-      // device_token = 'tt',
-      // device_type = 'pc',
-      // loginInfo = 'pc',
-    } = {}) {
-      return new Promise((resolve, reject) => {
+      vm,
+      password,
+      mobile,
+      route = {
+        name: 'index'
+      }
+    }) {
         // 开始请求登录接口
         AccountLogin({
-          username,
           password,
-          // mobile,
-          // device_token,
-          // device_type,
-          // loginInfo
+          mobile,
         })
           .then(async res => {
             // 设置 cookie 一定要存 uuid 和 token 两个 cookie
@@ -37,22 +32,26 @@ export default {
             // uuid 是用户身份唯一标识 用户注册的时候确定 并且不可改变 不可重复
             // token 代表用户当前登录状态 建议在网络请求中携带 token
             // 如有必要 token 需要定时更新，默认保存一天
-            util.cookies.set('uuid', res.uuid)
-            util.cookies.set('token', res.token)
+            util.cookies.set('uuid', res.id)
+            util.cookies.set('token', res.sid)
             // 设置 vuex 用户信息
             await dispatch('d2admin/user/set', {
-              name: res.name
+              name: res.username
             }, { root: true })
             // 用户登录后从持久化数据加载一系列的设置
             await dispatch('load')
-            // 结束
-            resolve()
+
+            // 更新路由 尝试去获取 cookie 里保存的需要重定向的页面完整地址
+            const path = util.cookies.get('redirect')
+            console.log('this.login:',route)
+            // 根据是否存有重定向页面判断如何重定向
+            vm.$router.replace(path  ? { path } : route)
+            // 删除 cookie 中保存的重定向页面
+            util.cookies.remove('redirect')
           })
           .catch(err => {
             console.log('err: ', err)
-            reject(err)
           })
-      })
     },
     /**
      * @description 注销用户并返回登录页面
@@ -65,7 +64,7 @@ export default {
        */
       async function logout () {
         // 删除cookie
-        util.cookies.remove('token')
+        util.cookies.remove('sid')
         util.cookies.remove('uuid')
         // 清空 vuex 用户信息
         await dispatch('d2admin/user/set', {}, { root: true })

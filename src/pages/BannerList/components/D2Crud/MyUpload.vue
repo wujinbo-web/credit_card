@@ -48,8 +48,8 @@ export default {
   },
   computed: {},
   mounted() {
-    console.log("scope:", this.scope);
-    console.log("value:", this.value);
+    // console.log("scope:", this.scope);
+    // console.log("value:", this.value);
   },
   methods: {
     handleRemove(file, fileList) {
@@ -57,10 +57,10 @@ export default {
       this.$emit("input", this.value);
     },
     handlePreview(file) {
-      console.log('handlePreview file',file);
+      // console.log('handlePreview file',file);
     },
     handleSuccess(response, file, fileList) {
-      console.log("response", response);
+      // console.log("response", response);
     //   this.value = fileList[0].response.data;
       this.$emit("input", response.data.relative_path);
     },

@@ -23,7 +23,7 @@ export const exmine_success = 'by_UserIdCard_pass'
 //审核驳回
 export const exmine_reject = 'by_UserIdCard_deny';
 //用户登录
-export const user_login = 'by_UserLoginSession_loginByMobilePassword';
+export const Login = 'by_UserLoginSession_loginByMobilePassword';
 
 //banner列表
 export const banner_list = 'by_Banners_query'
