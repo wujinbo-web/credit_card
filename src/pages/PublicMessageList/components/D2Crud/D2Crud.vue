@@ -197,20 +197,20 @@ export default {
         row.from_uid = '3';
         console.log(row)
         let data = postUrl(message_create,row);
-        this.$message({
-          message: '保存成功',
-          type: 'success'
-        });
+        // this.$message({
+        //   message: '保存成功',
+        //   type: 'success'
+        // });
         done()
         this.getPublicMessageList();
         this.formOptions.saveLoading = false
       }, 300);
     },
     handleDialogCancel (done) {
-      this.$message({
-        message: '取消保存',
-        type: 'warning'
-      });
+      // this.$message({
+      //   message: '取消保存',
+      //   type: 'warning'
+      // });
       done()
     },
   }

@@ -122,10 +122,10 @@ export default {
     },
 
     handleDialogCancel (done) {
-      this.$message({
-        message: '取消保存',
-        type: 'warning'
-      });
+      // this.$message({
+      //   message: '取消保存',
+      //   type: 'warning'
+      // });
       done()
     },
   }

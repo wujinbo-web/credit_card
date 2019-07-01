@@ -5,7 +5,7 @@
         name="image"
         :limit='1'
         :data="{uid:'3',sid:'2#f479aa7aeca640bf9f939ea8ba210724',t:'banner'}"
-        action="http://api.361fit.cn/picture/upload"
+        action="http://api.361fit.cn/index.php/picture/upload"
         :on-success="handleSuccess"
         :on-preview="handlePreview"
         :on-remove="handleRemove"

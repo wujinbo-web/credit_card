@@ -467,10 +467,10 @@ export default {
         channel_agent: row.channel_agent,
       });
       console.log(data);
-      this.$message({
-        message: '保存成功',
-        type: 'success'
-      });
+      // this.$message({
+      //   message: '保存成功',
+      //   type: 'success'
+      // });
       done()
       this.formOptions.saveLoading = false
     },
@@ -490,18 +490,18 @@ export default {
         channel_code: row.channel_code,
         channel_agent: row.channel_agent,
       });
-      this.$message({
-        message: '编辑成功',
-        type: 'success'
-      })
+      // this.$message({
+      //   message: '编辑成功',
+      //   type: 'success'
+      // })
       done()
       this.formOptions.saveLoading = false
     },
     handleDialogCancel (done) {
-      this.$message({
-        message: '取消保存',
-        type: 'warning'
-      });
+      // this.$message({
+      //   message: '取消保存',
+      //   type: 'warning'
+      // });
       done()
     },
   }

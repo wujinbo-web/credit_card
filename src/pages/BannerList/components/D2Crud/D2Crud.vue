@@ -384,10 +384,10 @@ export default {
     },
 
     handleDialogOpen ({ mode }) {
-      this.$message({
-        message: '打开模态框，模式为：' + mode,
-        type: 'success'
-      })
+      // this.$message({
+      //   message: '打开模态框，模式为：' + mode,
+      //   type: 'success'
+      // })
     },
     // 普通的新增
     addRow () {
@@ -412,10 +412,10 @@ export default {
         h: row.h,
         sort: row.sort
       });
-      this.$message({
-        message: "添加成功",
-        type: "success"
-      });
+      // this.$message({
+      //   message: "添加成功",
+      //   type: "success"
+      // });
       done();
       this.formOptions.saveLoading = false;
     },
@@ -446,8 +446,6 @@ export default {
     //banner-广告位 修改
     handleRowEdit({ index, row }) {
       this.formOptions.saveLoading = true;
-      console.log(index);
-      console.log(row);
       let data = postUrl(banner_update, {
         title: row.title,
         id: row.id,
@@ -463,10 +461,10 @@ export default {
         position: row.position,
         start_time: row.start_time
       });
-      this.$message({
-        message: "编辑成功",
-        type: "success"
-      });
+      // this.$message({
+      //   message: "编辑成功",
+      //   type: "success"
+      // });
       this.formOptions.saveLoading = false;
     },
     //banner-广告位 删除
@@ -477,10 +475,10 @@ export default {
         let data = postUrl(banner_delete, {
           id: row.id
         });
-        this.$message({
-          message: "删除成功",
-          type: "success"
-        });
+        // this.$message({
+        //   message: "删除成功",
+        //   type: "success"
+        // });
         done();
       }, 300);
     },
@@ -500,10 +498,10 @@ export default {
     },
 
     handleDialogCancel(done) {
-      this.$message({
-        message: "取消保存",
-        type: "warning"
-      });
+      // this.$message({
+      //   message: "取消保存",
+      //   type: "warning"
+      // });
       done();
     },
     //切换页码

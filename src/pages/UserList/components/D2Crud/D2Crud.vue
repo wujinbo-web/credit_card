@@ -236,19 +236,19 @@ export default {
       setTimeout(() => {
         let userAdd_data = postUrl(user_add,row)
         console.log(userAdd_data);
-        this.$message({
-          message: '保存成功',
-          type: 'success'
-        });
+        // this.$message({
+        //   message: '保存成功',
+        //   type: 'success'
+        // });
         done()
         this.formOptions.saveLoading = false
       }, 300);
     },
     handleDialogCancel (done) {
-      this.$message({
-        message: '取消保存',
-        type: 'warning'
-      });
+      // this.$message({
+      //   message: '取消保存',
+      //   type: 'warning'
+      // });
       done()
     },
 
