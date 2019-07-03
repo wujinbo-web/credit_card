@@ -36,6 +36,7 @@ import {
 import { timeSite, numTime } from "@/tool/TimeTransition";
 import MyUpload from "./MyUpload";
 import Img from './Img';
+import { constants } from 'fs';
 Vue.use(D2Crud);
 
 export default {
@@ -46,83 +47,89 @@ export default {
     return {
       jumpType: [], //跳转类型
       columns: [
+        // {
+        //   title: "位置",
+        //   key: "position",
+        //   align: "center",
+        //   width: "180",
+        //   filters: [],
+        //   filterMethod(value, row) {
+        //     console.log('位置',row);
+        //     return row.position == value;
+        //   },
+        //   filterPlacement: "bottom-end"
+        // },
         {
-          title: "位置",
-          key: "position",
+          title: "alis",
+          key: "alis",
           align: "center",
           width: "180",
           filters: [],
           filterMethod(value, row) {
             console.log('位置',row);
-            return row.position == value;
+            return row.alis == value;
           },
           filterPlacement: "bottom-end"
-        },
-        {
-          title: "alis",
-          key: "alis",
-          align: "center",
-          width: "180"
         },
         {
           title: "ID",
           key: "id",
           align: "center",
-          width: "80"
+          width: "60"
         },
         {
           title: "用户id",
           key: "uid",
           align: "center",
-          width: "80"
+          width: "60"
         },
         {
           title: "排序",
           key: "sort",
           align: "center",
-          width: "80"
+          width: "60"
         },
         {
           title: "点击次数",
           key: "click_nums",
           align: "center",
-          width: "80"
+          width: "60"
         },
         {
           title: "创建时间",
           key: "create_time",
           align: "center",
-          width: "180"
+          width: "100"
         },
         {
           title: "截止时间",
           key: "end_time",
           align: "center",
-          width: "180"
+          width: "100"
         },
         {
           title: "高度",
           key: "h",
           align: "center",
-          width: "80"
+          width: "60"
         },
         {
           title: "宽度",
           key: "w",
           align: "center",
-          width: "80"
+          width: "60"
         },
         {
           title: "标题",
           key: "title",
           align: "center",
-          width: "180"
+          width: "100"
         },
         {
           title: "图片路径",
           key: "img_url",
           align: "center",
-          width: "180",
+          width: "100",
           component:{
             name: Img,
           }
@@ -131,13 +138,13 @@ export default {
           title: "跳转网址",
           key: "jump_url",
           align: "center",
-          width: "180"
+          width: "100"
         },
         {
           title: "跳转类型",
           key: "jump_type",
           align: "center",
-          width: "180"
+          width: "60"
         }
       ],
       data: [],
@@ -172,11 +179,13 @@ export default {
             span: 12
           }
         },
-        jump_url: {
-          title: "跳转网址",
+        position: {
+          title: "位置",
           value: "",
           component: {
-            span: 24
+            name: "el-select",
+            options: [],
+            size: "small"
           }
         },
         jump_type: {
@@ -190,10 +199,10 @@ export default {
           title: "图片上传",
           value: "",
           component: {
-            name:MyUpload,
+            name:MyUpload
           }
         },
-        start_time: {
+        create_time: {
           title: "开始时间",
           value: "",
           component: {
@@ -232,20 +241,11 @@ export default {
             span: 24
           }
         },
-        id: {
-          title: "id",
+        jump_url: {
+          title: "跳转网址",
           value: "",
           component: {
             span: 24
-          }
-        },
-        position: {
-          title: "位置",
-          value: "",
-          component: {
-            name: "el-select",
-            options: [],
-            size: "small"
           }
         }
       },
@@ -257,11 +257,13 @@ export default {
             span: 12
           }
         },
-        jump_url: {
-          title: "跳转网址",
+        position: {
+          title: "位置",
           value: "",
           component: {
-            span: 24
+            name: "el-select",
+            options: [],
+            size: "small"
           }
         },
         jump_type: {
@@ -278,7 +280,7 @@ export default {
             name:MyUpload,
           }
         },
-        start_time: {
+        create_time: {
           title: "开始时间",
           value: "",
           component: {
@@ -324,15 +326,13 @@ export default {
             span: 24
           }
         },
-        position: {
-          title: "位置",
+        jump_url: {
+          title: "跳转网址",
           value: "",
           component: {
-            name: "el-select",
-            options: [],
-            size: "small"
+            span: 24
           }
-        }
+        },
       },
       formOptions: {
         labelWidth: "80px",
@@ -362,7 +362,7 @@ export default {
         // position: //位置 搜索用
         // nowTime:  //时间 搜索用
       });
-      this.pagination.total = Number(data.length);
+      this.pagination.total = data.length;
       this.data = data.map(item => {
         return {
           alis: item.alis, //标题
@@ -397,7 +397,6 @@ export default {
     },
     //banner-广告位 添加
     handleRowAdd(row, done) {
-      console.log(row)
       this.formOptions.saveLoading = true;
       let data = postUrl(banner_add, {
         title: row.title,
@@ -406,8 +405,9 @@ export default {
         jump_url: row.jump_url,
         jump_type: row.jump_type,
         img_url: row.img_url,
-        start_time: new Date(row.start_time).getTime(), //开始时间 单位秒
-        end_time: new Date(row.end_time).getTime(), //结束时间 单位秒 end_time = 9999999999 设置最大值
+        // start_time: new Date(row.start_time).getTime(), //开始时间 单位秒
+        start_time: new Date(row.create_time).getTime()/1000, //开始时间 单位秒
+        end_time: new Date(row.end_time).getTime()/1000, //结束时间 单位秒 end_time = 9999999999 设置最大值
         w: row.w,
         h: row.h,
         sort: row.sort
@@ -417,6 +417,7 @@ export default {
       //   type: "success"
       // });
       done();
+      this.getBannerList();
       this.formOptions.saveLoading = false;
     },
 
@@ -436,35 +437,34 @@ export default {
       this.editTemplate.position.component.options = this.jumpType;
       this.columns[0].filters = data.list.map(item => {
         return {
-          text: item.code,
-          value: item.code
+          text: item.name,
+          value: item.name
         };
       });
       this.formOptions.saveLoading = false;
     },
 
     //banner-广告位 修改
-    handleRowEdit({ index, row }) {
+    async handleRowEdit({ index, row },done) {
+      console.log('row:',row)
+      this.getBannerInfo(row.id)
       this.formOptions.saveLoading = true;
-      let data = postUrl(banner_update, {
+      let data = await postUrl(banner_update, {
         title: row.title,
         id: row.id,
-        user_id: row.user_id,
+        user_id: row.uid,
         img_url: row.img_url,
         jump_type: row.jump_type,
         jump_url: row.jump_url,
-        start_time: new Date(row.start_time).getTime(), //开始时间 单位秒
-        end_time: new Date(row.end_time).getTime(), //结束时间 单位秒 end_time = 9999999999 设置最大值
+        start_time:new Date(row.create_time).getTime()/1000, //开始时间 单位秒
+        end_time: new Date(row.end_time).getTime()/1000, //结束时间 单位秒 end_time = 9999999999 设置最大值
         h: row.h,
         w: row.w,
         sort: row.sort,
         position: row.position,
-        start_time: row.start_time
       });
-      // this.$message({
-      //   message: "编辑成功",
-      //   type: "success"
-      // });
+      done();
+      this.getBannerList();
       this.formOptions.saveLoading = false;
     },
     //banner-广告位 删除
@@ -484,10 +484,9 @@ export default {
     },
 
     //banner-广告位 返回banner广告位信息
-    async getBannerInfo(row) {
-      console.log(row);
+    async getBannerInfo(id) {
       let data = await postUrl(banner_info, {
-        id: "3"
+        id: id
       });
       console.log("返回banner广告位信息:", data);
     },

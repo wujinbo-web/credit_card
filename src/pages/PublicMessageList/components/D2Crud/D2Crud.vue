@@ -43,27 +43,27 @@ export default {
         {
           title: '标题',
           key: 'title',
-          width: '180'
+          width: '80'
         },
         {
           title: '摘要',
           key: 'summary',
-          width: '180'
+          width: '80'
         },
         {
           title: '额外信息',
           key: 'extra',
-          width: '180'
+          width: '80'
         },
         {
           title: '类型',
           key: 'dtreeType',
-          width: '180'
+          width: '120'
         },
         {
           title: '信息状态',
           key: 'msgStatus',
-          width: '100'
+          width: '80'
         },
         {
           title: '创建时间',
@@ -156,7 +156,7 @@ export default {
         pageSize:10,
         total:1,
       },
-      dtree_type:'002002',
+      dtree_type:'announce',
     }
   },
   mounted(){
@@ -180,7 +180,7 @@ export default {
           summary: item.summary,
           title: item.title,
           id: item.id,
-          fromUid: item.from_uid,
+          fromUid: item.fromUid,
           toUid: item.toUid,
         }
       })

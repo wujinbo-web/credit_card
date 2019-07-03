@@ -60,8 +60,6 @@ export default {
       // console.log('handlePreview file',file);
     },
     handleSuccess(response, file, fileList) {
-      // console.log("response", response);
-    //   this.value = fileList[0].response.data;
       this.$emit("input", response.data.relative_path);
     },
   }
