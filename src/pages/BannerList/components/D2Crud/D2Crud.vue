@@ -350,7 +350,6 @@ export default {
     this.getBannerList();
     this.getBannerType();
     this.getBannerPosition(); //banner-广告位 返回banner广告图位置
-    this.getBannerInfo(); //返回banner广告位信息
   },
   methods: {
     //获取banner列表

@@ -11,6 +11,9 @@ export function postUrl (url, params) {
 }
 
 function qs(url,params){
+
+  const token = util.cookies.get('token');
+  const uuid = util.cookies.get('uuid');
   let arr=[];
   arr.push(`app_type=pc`);
   arr.push(`app_version=1.0.0`);
@@ -20,9 +23,9 @@ function qs(url,params){
   arr.push(`service_type=${url}`);
   arr.push(`client_id=04esfI0fYuD5`);//固定的
   arr.push(`app_request_time=1000000`);
-  arr.push(`uid=3`);//登陆时候传入，现在写死
-  arr.push(`sid=2#f479aa7aeca640bf9f939ea8ba210724`);//登陆时候传入，现在写死
-  // const token = util.cookies.get('token');
+  console.log('token',token);
+  arr.push(`uuid=${uuid}`);//登陆时候传入，现在写死
+  arr.push(`token=${token}`);//登陆时候传入，现在写死
   for(let key in params){
     arr.push(`${key}=${params[key]}`);
   }

@@ -4,7 +4,7 @@
         ref="avatar"
         name="image"
         :limit='1'
-        :data="{uid:'3',sid:'2#f479aa7aeca640bf9f939ea8ba210724',t:'banner'}"
+        :data="{uid:uuid,sid:token,t:'banner'}"
         action="http://api.361fit.cn/index.php/picture/upload"
         :on-success="handleSuccess"
         :on-preview="handlePreview"
@@ -20,9 +20,12 @@
 </template>
 
 <script>
+import util from '@/libs/util';
 export default {
   data() {
     return {
+      token:"",
+      uuid:"",
       dialogImageUrl: "",
       dialogVisible: false,
       fileList2:
@@ -48,8 +51,10 @@ export default {
   },
   computed: {},
   mounted() {
-    // console.log("scope:", this.scope);
-    // console.log("value:", this.value);
+    this.token = util.cookies.get('token');
+    this.uuid = util.cookies.get('uuid');
+    console.log("token:", this.token);
+    console.log("uuid:", this.uuid);
   },
   methods: {
     handleRemove(file, fileList) {

@@ -12,7 +12,7 @@
       @custom-emit-4='updateUserFeeNormal'
       @dialog-cancel="handleDialogCancel"
       /> -->
-          <el-button v-if="isSetFee"  @click="setUserqueryFeeQuick2">快捷设置</el-button>
+          <el-button v-if="isQuick"   @click="setUserqueryFeeQuick2">快捷设置</el-button>
           <el-button v-if="isSetFee" type="primary"  @click="setUserFeeNormal2">代扣代付设置</el-button>
 
           <el-button @click="updateUserFeeQuick2">快捷更新</el-button>
@@ -145,6 +145,7 @@ export default {
       data2: [],
       isSetFee:true,//显示设置 or 更新 默认显示设置
       userID:'',//router获取来的userid
+      isQuick:true, //快捷按钮 是否显示，默认显示
     }
   },
   mounted(){
@@ -152,12 +153,28 @@ export default {
     this.userqueryFee();
   },
   methods: {
+    //检查是否有 channel_code == '663006'
+    checkQuick(params) {
+      return params == '663006'
+    },
     //查看用户手续费
     async userqueryFee(){
       let data = await postUrl(user_queryFee,{
         user_id: this.userID
       });
       this.data2 = data;
+  
+      var checkQuickCode = []
+      this.data2.forEach(element => {
+        checkQuickCode.push(element.channel_code);
+      });
+      checkQuickCode.filter(this.checkQuick)
+      //检查是否有 channel_code == '663006' ，如果有，隐藏快捷设置按钮，否则显示
+      if(checkQuickCode.filter(this.checkQuick).length > 0){
+        this.isQuick = false
+      }else{
+        this.isQuick = true;
+      }
       if(this.data2.length == 0){
         this.isSetFee = true;
       }else{
@@ -171,6 +188,7 @@ export default {
       let data = await postUrl(set_UserFeeQuick,{
         user_id: this.userID,
       });
+      this.userqueryFee();
       this.$message.success('快捷：首次设置手续费成功');
     },
     //快捷更新 更新手续费
@@ -178,6 +196,7 @@ export default {
       let data = await postUrl(update_UserFeeQuick,{
         user_id: this.userID,
       });
+      this.userqueryFee();
       this.$message.success('快捷：更新手续费成功');
     },
     //代扣代付设置 首次设置手续费 
@@ -185,6 +204,7 @@ export default {
       let data = await postUrl(set_UserFeeNormal,{
         user_id: this.userID,
       });
+      this.userqueryFee();
       console.log('代扣代付 首次设置用户手续费 返回结果：',data)
       this.$message.success('代扣代付：首次设置用户手续费成功');
     },
@@ -193,6 +213,7 @@ export default {
       let data = await postUrl(update_UserFeeNormal,{
         user_id: this.userID,
       });
+      this.userqueryFee();
       console.log('代扣代付 更新手续费 返回结果：',data);
       this.$message.success('代扣代付：更新手续费成功');
     },
