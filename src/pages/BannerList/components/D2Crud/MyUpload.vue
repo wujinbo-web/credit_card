@@ -5,7 +5,7 @@
         name="image"
         :limit='1'
         :data="{uid:uuid,sid:token,t:'banner'}"
-        action="http://api.361fit.cn/index.php/picture/upload"
+        action="http://api.byg577.com/index.php/picture/upload"
         :on-success="handleSuccess"
         :on-preview="handlePreview"
         :on-remove="handleRemove"

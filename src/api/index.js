@@ -23,9 +23,8 @@ function qs(url,params){
   arr.push(`service_type=${url}`);
   arr.push(`client_id=04esfI0fYuD5`);//固定的
   arr.push(`app_request_time=1000000`);
-  console.log('token',token);
-  arr.push(`uuid=${uuid}`);//登陆时候传入，现在写死
-  arr.push(`token=${token}`);//登陆时候传入，现在写死
+  arr.push(`uid=${uuid}`);//登陆时候传入，现在写死
+  arr.push(`sid=${token}`);//登陆时候传入，现在写死
   for(let key in params){
     arr.push(`${key}=${params[key]}`);
   }

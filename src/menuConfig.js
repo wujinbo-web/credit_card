@@ -16,11 +16,6 @@ const asideMenuConfig = [
     icon: 'home',
   },
   {
-    name: '测试',
-    path: '/ceshi',
-    icon: 'home',
-  },
-  {
     name: '用户列表',
     path: '/user/list',
     icon: 'home',
@@ -39,8 +34,7 @@ const asideMenuConfig = [
     name: '公共消息列表',
     path: '/publicmessage/list',
     icon: 'home',
-  },
-  // {
+  }, // {
   //   name: '用户手续费管理',
   //   path: '/manage/userfee',
   //   icon: 'home',
@@ -53,6 +47,16 @@ const asideMenuConfig = [
   {
     name: '订单列表',
     path: '/order/list',
+    icon: 'home',
+  },
+  {
+    name: '身份证黑名单列表',
+    path: '/blackIdCard/list',
+    icon: 'home',
+  },
+  {
+    name: '某用户邀请用户信息',
+    path: '/user/invite',
     icon: 'home',
   },
 ]; // 顶栏菜单配置

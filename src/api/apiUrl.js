@@ -47,6 +47,8 @@ export const suggest_list = 'bu_Suggest_query'
 export const publicMessage_list = 'by_Message_queryPublicMessage'
 //消息添加
 export const message_create = 'by_Message_create'
+//消息内容编辑
+export const message_update = 'by_Message_update'
 
 //支付通道
 export const payment_list = 'by_PaymentChannel_query'
@@ -62,3 +64,13 @@ export const payment_edit = 'by_PaymentChannel_update'
 export const order_list = 'by_CbOrder_query'
 //订单详情
 export const order_info = 'by_CbOrder_info'
+
+//身份证黑名单查询
+export const blackIdCard_list = 'by_BlackIdCard_query'
+//身份证黑名单添加
+export const blackIdCard_add = 'by_BlackIdCard_add'
+//身份证黑名单删除
+export const blackIdCard_delete = 'by_BlackIdCard_delete'
+
+//身份证黑名单删除
+export const userInvite_query = 'by_UserInvite_query'

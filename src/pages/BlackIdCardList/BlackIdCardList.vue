@@ -1,9 +1,8 @@
 <template>
   <!-- d2-container 文档 https://doc.d2admin.fairyever.com/zh/sys-components/container.html -->
-  <d2-container class="page-ceshi">
-    <template slot="header">ceshi</template>
+  <d2-container class="page-BlackIdCardList">
+    <template slot="header">身份证黑名单列表</template>
     <d2-crud/>
-    <template slot="footer">自动生成 1 个组件</template>
   </d2-container>
 </template>
 
@@ -12,7 +11,7 @@
 import D2Crud from './components/D2Crud/index'
 // 请删除下面代码中你不需要的部分
 export default {
-  name: 'ceshi',
+  name: 'BlackIdCardList',
   components: {
     D2Crud
   },
@@ -41,5 +40,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-@import './Ceshi.scss';
+@import './BlackIdCardList.scss';
 </style>

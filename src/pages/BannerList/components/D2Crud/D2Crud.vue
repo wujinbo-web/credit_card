@@ -222,14 +222,14 @@ export default {
         },
         w: {
           title: "宽",
-          value: "100",
+          value: "",
           component: {
             span: 24
           }
         },
         h: {
           title: "高",
-          value: "100",
+          value: "",
           component: {
             span: 24
           }

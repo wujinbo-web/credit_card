@@ -174,7 +174,7 @@ export default {
       });
       this.loading=false;
       //data.count 页码
-      this.pagination.total=data.count;
+      this.pagination.total= Number(data.count);
       //渲染表格数据
       this.data = data.list.map(item=>{
         return{
@@ -190,6 +190,7 @@ export default {
     //审核通过
     async handleSuccess({ row, index }){
       let data = await postUrl(exmine_success,{ user_id: row.uid });
+      this.getIndexData();
       this.$message.success('通过')
     },
     //审核驳回

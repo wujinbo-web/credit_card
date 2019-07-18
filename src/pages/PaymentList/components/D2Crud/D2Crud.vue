@@ -1,15 +1,11 @@
 <template>
   <div class="d2-crud">
-    <el-button slot="header" style="margin-bottom: 5px" @click="addRow">新增</el-button>
+    <!-- <el-button slot="header" style="margin-bottom: 5px" @click="addRow">新增</el-button> -->
     <d2-crud
       ref="d2Crud"
       :columns="columns"
       :data="data"
       :rowHandle="rowHandle"
-      :add-template="addTemplate"
-      :edit-template="editTemplate"
-      @row-add="handleRowAdd"
-      @row-edit="handleRowEdit"
       @dialog-cancel="handleDialogCancel"
       @custom-emit-1="showDialog"/>
       <el-dialog
@@ -166,216 +162,216 @@ export default {
             emit: 'custom-emit-1'
           }
         ],
-        edit: {
-          text: '编辑',
-          size: 'small',
-          show (index, row) {
-            return true
-          }
-        },
+        // edit: {
+        //   text: '编辑',
+        //   size: 'small',
+        //   show (index, row) {
+        //     return true
+        //   }
+        // },
       },
-      addTemplate: {
-        title: {
-          title: '标题',
-          value: '',
-          component: {
-            span: 24,
-          }
-        },
-        id: {
-          title: 'id',
-          value: '',
-          component: {
-            span: 24,
-          }
-        },
-        fee_per: {
-          title: '百分比费率 单位 : %',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        fixed_fee: {
-          title: '固定费率 单位：元',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        day_time_start: {
-          title: '一天开始 0000',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        day_time_end: {
-          title: '一天结束 2399',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        single_limit_money: {
-          title: '单笔限额',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        single_card_day_limit_money: {
-          title: '单卡单日限额',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        day_limit_money: {
-          title: '单日限额',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        channel_code: {
-          title: '渠道商通道',
-          value: '',
-          component: {
-            name: 'el-select',
-            options: [
-              {
-                value: '488000',
-                label: '提现'
-              },
-              {
-                value: '487000',
-                label: '支付'
-              },
-              {
-                value: '663006',
-                label: '快捷'
-              }
-            ],
-            size: 'small'
-          }
-        },
-        channel_agent: {
-          title: '渠道商名',
-          value: '',
-          component: {
-            name: 'el-select',
-            options: [
-              {
-                value: 'zmf',
-                label: '暂定'
-              },
-            ],
-            size: 'small'
-          }
-        },
-      },
-      editTemplate: {
-        title: {
-          title: '标题',
-          value: '',
-          component: {
-            span: 24,
-          }
-        },
-        id: {
-          title: 'id',
-          value: '',
-          component: {
-            span: 24,
-          }
-        },
-        fee_per: {
-          title: '百分比费率 单位 : %',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        fixed_fee: {
-          title: '固定费率 单位：元',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        day_time_start: {
-          title: '一天开始 0000',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        day_time_end: {
-          title: '一天结束 2399',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        single_limit_money: {
-          title: '单笔限额',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        single_card_day_limit_money: {
-          title: '单卡单日限额',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        day_limit_money: {
-          title: '单日限额',
-          value: '',
-          component: {
-            span: 24
-          }
-        },
-        channel_code: {
-          title: '渠道商通道',
-          value: '',
-          component: {
-            name: 'el-select',
-            options: [
-              {
-                value: '488000',
-                label: '提现'
-              },
-              {
-                value: '487000',
-                label: '支付'
-              },
-              {
-                value: '663006',
-                label: '快捷'
-              }
-            ],
-            size: 'small'
-          }
-        },
-        channel_agent: {
-          title: '渠道商名',
-          value: '',
-          component: {
-            name: 'el-select',
-            options: [
-              {
-                value: 'zmf',
-                label: '暂定'
-              },
-            ],
-            size: 'small'
-          }
-        },
-      },
+      // addTemplate: {
+      //   title: {
+      //     title: '标题',
+      //     value: '',
+      //     component: {
+      //       span: 24,
+      //     }
+      //   },
+      //   id: {
+      //     title: 'id',
+      //     value: '',
+      //     component: {
+      //       span: 24,
+      //     }
+      //   },
+      //   fee_per: {
+      //     title: '百分比费率 单位 : %',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   fixed_fee: {
+      //     title: '固定费率 单位：元',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   day_time_start: {
+      //     title: '一天开始 0000',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   day_time_end: {
+      //     title: '一天结束 2399',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   single_limit_money: {
+      //     title: '单笔限额',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   single_card_day_limit_money: {
+      //     title: '单卡单日限额',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   day_limit_money: {
+      //     title: '单日限额',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   channel_code: {
+      //     title: '渠道商通道',
+      //     value: '',
+      //     component: {
+      //       name: 'el-select',
+      //       options: [
+      //         {
+      //           value: '488000',
+      //           label: '提现'
+      //         },
+      //         {
+      //           value: '487000',
+      //           label: '支付'
+      //         },
+      //         {
+      //           value: '663006',
+      //           label: '快捷'
+      //         }
+      //       ],
+      //       size: 'small'
+      //     }
+      //   },
+      //   channel_agent: {
+      //     title: '渠道商名',
+      //     value: '',
+      //     component: {
+      //       name: 'el-select',
+      //       options: [
+      //         {
+      //           value: 'zmf',
+      //           label: '暂定'
+      //         },
+      //       ],
+      //       size: 'small'
+      //     }
+      //   },
+      // },
+      // editTemplate: {
+      //   title: {
+      //     title: '标题',
+      //     value: '',
+      //     component: {
+      //       span: 24,
+      //     }
+      //   },
+      //   // id: {
+      //   //   title: 'id',
+      //   //   value: '',
+      //   //   component: {
+      //   //     span: 24,
+      //   //   }
+      //   // },
+      //   fee_per: {
+      //     title: '百分比费率 单位 : %',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   fixed_fee: {
+      //     title: '固定费率 单位：元',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   day_time_start: {
+      //     title: '一天开始 0000',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   day_time_end: {
+      //     title: '一天结束 2399',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   single_limit_money: {
+      //     title: '单笔限额',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   single_card_day_limit_money: {
+      //     title: '单卡单日限额',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   day_limit_money: {
+      //     title: '单日限额',
+      //     value: '',
+      //     component: {
+      //       span: 24
+      //     }
+      //   },
+      //   channel_code: {
+      //     title: '渠道商通道',
+      //     value: '',
+      //     component: {
+      //       name: 'el-select',
+      //       options: [
+      //         {
+      //           value: '488000',
+      //           label: '提现'
+      //         },
+      //         {
+      //           value: '487000',
+      //           label: '支付'
+      //         },
+      //         {
+      //           value: '663006',
+      //           label: '快捷'
+      //         }
+      //       ],
+      //       size: 'small'
+      //     }
+      //   },
+      //   channel_agent: {
+      //     title: '渠道商名',
+      //     value: '',
+      //     component: {
+      //       name: 'el-select',
+      //       options: [
+      //         {
+      //           value: 'zmf',
+      //           label: '暂定'
+      //         },
+      //       ],
+      //       size: 'small'
+      //     }
+      //   },
+      // },
       formOptions: {
         labelWidth: '80px',
         labelPosition: 'left',
@@ -446,62 +442,50 @@ export default {
       console.log('支付宝通道',data)
     },
     // 普通的新增
-    addRow () {
-      this.$refs.d2Crud.showDialog({
-        mode: 'add'
-      })
-    },
-    async handleRowAdd (row, done) {
-      this.formOptions.saveLoading = true
-      console.log(row)
-      let data = await postUrl(payment_add,{
-        title: row.title,
-        fee_per:row.fee_per,
-        fixed_fee: row.fixed_fee,
-        day_time_start: row.day_time_start,
-        day_time_end: row.day_time_end,
-        single_limit_money: row.single_limit_money,
-        single_card_day_limit_money:row.single_card_day_limit_money,
-        day_limit_money: row.day_limit_money,
-        channel_code: row.channel_code,
-        channel_agent: row.channel_agent,
-      });
-      console.log(data);
-      // this.$message({
-      //   message: '保存成功',
-      //   type: 'success'
-      // });
-      done()
-      this.formOptions.saveLoading = false
-    },
+    // addRow () {
+    //   this.$refs.d2Crud.showDialog({
+    //     mode: 'add'
+    //   })
+    // },
+    // async handleRowAdd (row, done) {
+    //   this.formOptions.saveLoading = true
+    //   console.log(row)
+    //   let data = await postUrl(payment_add,{
+    //     title: row.title,
+    //     fee_per:row.fee_per,
+    //     fixed_fee: row.fixed_fee,
+    //     day_time_start: row.day_time_start,
+    //     day_time_end: row.day_time_end,
+    //     single_limit_money: row.single_limit_money,
+    //     single_card_day_limit_money:row.single_card_day_limit_money,
+    //     day_limit_money: row.day_limit_money,
+    //     channel_code: row.channel_code,
+    //     channel_agent: row.channel_agent,
+    //   });
+    //   console.log(data);
+    //   done()
+    //   this.formOptions.saveLoading = false
+    // },
     // 修改
-    handleRowEdit ({index, row}, done) {
-      this.formOptions.saveLoading = true
-      let data =  postUrl(payment_edit,{
-        id:row.id,
-        title: row.title,
-        fee_per:row.fee_per,
-        fixed_fee: row.fixed_fee,
-        day_time_start: row.day_time_start,
-        day_time_end: row.day_time_end,
-        single_limit_money: row.single_limit_money,
-        single_card_day_limit_money:row.single_card_day_limit_money,
-        day_limit_money: row.day_limit_money,
-        channel_code: row.channel_code,
-        channel_agent: row.channel_agent,
-      });
-      // this.$message({
-      //   message: '编辑成功',
-      //   type: 'success'
-      // })
-      done()
-      this.formOptions.saveLoading = false
-    },
+    // handleRowEdit ({index, row}, done) {
+    //   this.formOptions.saveLoading = true
+    //   let data =  postUrl(payment_edit,{
+    //     id:row.id,
+    //     title: row.title,
+    //     fee_per:row.fee_per,
+    //     fixed_fee: row.fixed_fee,
+    //     day_time_start: row.day_time_start,
+    //     day_time_end: row.day_time_end,
+    //     single_limit_money: row.single_limit_money,
+    //     single_card_day_limit_money:row.single_card_day_limit_money,
+    //     day_limit_money: row.day_limit_money,
+    //     channel_code: row.channel_code,
+    //     channel_agent: row.channel_agent,
+    //   });
+    //   done()
+    //   this.formOptions.saveLoading = false
+    // },
     handleDialogCancel (done) {
-      // this.$message({
-      //   message: '取消保存',
-      //   type: 'warning'
-      // });
       done()
     },
   }

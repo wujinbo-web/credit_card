@@ -178,7 +178,7 @@ export default {
       if(this.data2.length == 0){
         this.isSetFee = true;
       }else{
-        this.isSetFee = false;
+        this.isSetFee = true;
       }
       console.log('查看用户手续费：',this.data2);
     },

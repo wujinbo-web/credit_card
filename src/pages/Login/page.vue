@@ -16,14 +16,15 @@
         flex="dir:top main:justify cross:center box:justify">
         <div class="page-login--content-header">
           <p class="page-login--content-header-motto">
-            时间是一切财富中最宝贵的财富。 <span>—— 德奥弗拉斯多</span>
+            <!-- 时间是一切财富中最宝贵的财富。 <span>—— 德奥弗拉斯多</span> -->
           </p>
         </div>
         <div
           class="page-login--content-main"
           flex="dir:top main:center cross:center">
           <!-- logo -->
-          <img class="page-login--logo" src="./image/logo@2x.png">
+          <!-- <img class="page-login--logo" src="./image/logo@2x.png"> -->
+          <img class="page-login--logo" src="./image/logo.png">
           <!-- 表单 -->
           <div class="page-login--form">
             <el-card shadow="never">
@@ -68,7 +69,7 @@
             <a href="#">条款</a>
           </p>
           <p class="page-login--content-footer-copyright">
-            Copyright <d2-icon name="copyright"/> 2018 D2 Projects 开源组织出品 <a href="https://github.com/FairyEver">@FairyEver</a>
+            <!-- Copyright <d2-icon name="copyright"/> 2018 D2 Projects 开源组织出品 <a href="https://github.com/FairyEver">@FairyEver</a> -->
           </p>
         </div>
       </div>
@@ -105,7 +106,7 @@ export default {
       // 表单
       formLogin: {
         mobile: '',
-        password: '1234567890',
+        password: '',
         // username: 'admin',
         // password: 'admin',
         code: 'v9am'
@@ -115,9 +116,6 @@ export default {
         mobile: [
           { required: true, message: '请输入手机号码', trigger: 'blur' }
         ],
-        // username: [
-        //   { required: true, message: '请输入手机号码', trigger: 'blur' }
-        // ],
         password: [
           { required: true, message: '请输入密码', trigger: 'blur' }
         ],
@@ -149,17 +147,7 @@ export default {
         if (valid) {
           console.log(valid);
           // 登录
-          // 注意 这里的演示没有传验证码
-          // 具体需要传递的数据请自行修改代码
-          // let res =  await postUrl(user_login,{
-          //   mobile: this.formLogin.mobile,
-          //   password: this.formLogin.password,
-          //   device_token:"tt", //设备标识
-          //   device_type:"pc", //设备类型(获取浏览器的类型)
-          //   loginInfo:"pc", //登录额外信息，可传空字符串
-          // })
           this.login({
-            // username: this.formLogin.username,
             vm: this,
             mobile: this.formLogin.mobile,
             password: this.formLogin.password,
@@ -222,7 +210,7 @@ export default {
   }
   // main
   .page-login--logo {
-    width: 240px;
+    width: 80px;
     margin-bottom: 2em;
     margin-top: -2em;
   }

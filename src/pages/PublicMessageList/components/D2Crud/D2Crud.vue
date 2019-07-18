@@ -5,11 +5,14 @@
       ref="d2Crud"
       :columns="columns"
       :data="data"
+      :rowHandle="rowHandle"
       :add-template="addTemplate"
+      :edit-template="editTemplate"
       :form-rules="formRules"
       :form-options="formOptions"
       @dialog-cancel="handleDialogCancel"
-      @row-add="handleRowAdd"/>
+      @row-add="handleRowAdd"
+      @row-edit="handleRowEdit"/>
   </div>
 </template>
 
@@ -17,7 +20,7 @@
 import Vue from 'vue'
 import D2Crud from '@d2-projects/d2-crud'
 import { postUrl } from '@/api'
-import { publicMessage_list, message_create } from '@/api/apiUrl'
+import { publicMessage_list, message_create ,message_update} from '@/api/apiUrl'
 import { timeSite, numTime } from '@/tool/TimeTransition'
 Vue.use(D2Crud)
 
@@ -135,6 +138,39 @@ export default {
           }
         },
       },
+      rowHandle: {
+        columnHeader: '编辑表格',
+        edit: {
+          text: '编辑',
+          size: 'small',
+          show (index, row) {
+            return true
+          },
+        }
+      },
+      editTemplate: {
+        title: {
+          title: '标题',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        summary: {
+          title: '摘要',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+        content: {
+          title: '内容',
+          value: '',
+          component: {
+            span: 24
+          }
+        },
+      },
       formRules: {
         title: [ { required: true, message: '请输入标题', trigger: 'blur' } ],
         dtree_type: [ { required: true, message: '请输入类型', trigger: 'blur' } ],
@@ -191,26 +227,32 @@ export default {
         mode: 'add'
       })
     },
-    handleRowAdd (row, done) {
+    async handleRowAdd (row, done) {
       this.formOptions.saveLoading = true
-      setTimeout(() => {
-        row.from_uid = '3';
-        console.log(row)
-        let data = postUrl(message_create,row);
-        // this.$message({
-        //   message: '保存成功',
-        //   type: 'success'
-        // });
-        done()
-        this.getPublicMessageList();
-        this.formOptions.saveLoading = false
-      }, 300);
+      row.from_uid = '3';
+      console.log(row)
+      let data =await postUrl(message_create,row);
+      // this.$message({
+      //   message: '保存成功',
+      //   type: 'success'
+      // });
+      done()
+      this.getPublicMessageList();
+      this.formOptions.saveLoading = false
+    },
+    async handleRowEdit (row, done) {
+      this.formOptions.saveLoading = true
+      console.log(row)
+      let data = await postUrl(message_update,{
+        title:row.row.title,
+        summary:row.row.summary,
+        content:row.row.title,
+        id:row.row.id,
+      });
+      done()
+      this.formOptions.saveLoading = false
     },
     handleDialogCancel (done) {
-      // this.$message({
-      //   message: '取消保存',
-      //   type: 'warning'
-      // });
       done()
     },
   }

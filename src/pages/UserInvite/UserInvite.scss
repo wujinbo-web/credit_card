@@ -4,12 +4,12 @@
 // 这个页面的样式
 // 如果页面不需要定义样式，请删除下列代码
 // - 此文件
-// - Ceshi.vue 中的 style 标签
-// - Ceshi.vue 中 d2-container 组件上自动生成的 class="page-ceshi"
+// - UserInvite.vue 中的 style 标签
+// - UserInvite.vue 中 d2-container 组件上自动生成的 class="page-UserInvite"
 
 // 你可以像下面这样编写 SCSS 代码（BEM 规范）：
 
-$block: 'page-ceshi';
+$block: 'page-UserInvite';
 .#{$block} {
   &.#{$block}--dark {
     background-color: #CCC;
