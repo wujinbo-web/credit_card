@@ -1,13 +1,16 @@
 <template>
   <div class="d2-crud">
+
     <el-form :model="form" ref="form" >
-      <el-form-item label="查询的用户手机号" prop="mobile" label-width="100">
-        <el-input v-model="form.mobile" maxlength="100" />
+      <!-- <el-form-item label="查询的用户手机号" prop="mobile" label-width="100">
+        <input class="el-input__inner query_input" v-model="form.mobile" maxlength="100" />
       </el-form-item>
       <el-form-item label="查询订单号" prop="order_code">
-        <el-input v-model="form.order_code" />
-      </el-form-item>
+        <input  class="el-input__inner query_input" v-model="form.order_code" />
+      </el-form-item> -->
       <el-form-item>
+        <input class="el-input__inner query_input" v-model="form.mobile" maxlength="100" placeholder="请输入查询的用户手机号" />
+        <input  class="el-input__inner query_input" v-model="form.order_code"  placeholder="请输入查询订单号" />
         <el-button type="primary" @click="submitForm('form')">提交</el-button>
       </el-form-item>
     </el-form>
@@ -42,14 +45,22 @@ export default {
     return {
       columns: [
         {
+          title: 'id',
+          key: 'id',
+          width: '80',
+          align:'center'
+        },
+        {
           title: '价格',
           key: 'amount',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '自动撤销',
           key: 'auto_withdraw',
-          width: '60'
+          width: '60',
+          align:'center'
         },
         // {
         //   title: '克隆订单id',
@@ -59,37 +70,38 @@ export default {
         {
           title: '创建月份',
           key: 'create_month',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '创建时间',
           key: 'create_time',
-          width: '80'
-        },
-        {
-          title: 'id',
-          key: 'id',
-          width: '80'
+          width: '100',
+          align:'center'
         },
         {
           title: '备注',
           key: 'note',
-          width: '180'
+          width: '180',
+          align:'center'
         },
         {
           title: '通知时间',
           key: 'notify_time',
-          width: '80'
+          width: '100',
+          align:'center'
         },
         {
           title: '订单号码',
           key: 'order_code',
-          width: '180'
+          width: '180',
+          align:'center'
         },
         {
           title: '订单状态',
           key: 'order_type',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         // {
         //   title: '支付金额',
@@ -124,22 +136,26 @@ export default {
         {
           title: 'sys_fee',
           key: 'sys_fee',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: 'uid',
           key: 'uid',
-          width: '80'
+          width: '60',
+          align:'center'
         },
         {
           title: '更新时间',
           key: 'update_time',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '上传结果',
           key: 'upload_result',
-          width: '80'
+          width: '80',
+          align:'center'
         },
 
         // {
@@ -155,17 +171,20 @@ export default {
         {
           title: '银行卡名',
           key: '_card_name',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '银行卡号',
           key: '_card_no',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '状态',
           key: '_status',
-          width: '80'
+          width: '80',
+          align:'center'
         },
       ],
       data: [],
@@ -281,3 +300,10 @@ export default {
 }
 
 </script>
+
+<style>
+.query_input{
+  width: 300px!important;
+  margin-right: 20px;
+}
+</style>

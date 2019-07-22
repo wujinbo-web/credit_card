@@ -38,58 +38,68 @@ export default {
         {
           title: '渠道商名',
           key: 'channel_agent',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '渠道商通道 ',
           key: 'channel_code',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '标题',
           key: 'title',
-          width: '180'
+          width: '180',
+          align:'center'
         },
         {
           title: '每日限制额度 元',
           key: 'day_limit_money',
-          width: '120'
+          width: '120',
+          align:'center'
         },
-
         {
           title: '可交易时间结束',
           key: 'day_time_end',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '可交易时间开始 ',
           key: 'day_time_start',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '百分比',
           key: 'fee_per',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '固定费用',
           key: 'fixed_fee',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: 'ID',
           key: 'id',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '单卡单日 元',
           key: 'single_card_day_limit_money',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '单笔额度 元',
           key: 'single_limit_money',
-          width: '100'
+          width: '100',
+          align:'center'
         },
       ],
       data: [],
@@ -97,58 +107,68 @@ export default {
         {
           title: 'channel_id',
           key: 'channel_id',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '渠道商通道',
           key: 'channel_code',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '可交易时间结束',
           key: 'day_time_end',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '可交易时间开始',
           key: 'day_time_start',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '标题',
           key: 'title',
-          width: '100'
+          width: '100',
+          align:'center'
         },
-
         {
           title: 'start_amt',
           key: 'start_amt',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: 'end_amt',
           key: 'end_amt',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '百分比',
           key: 'fee_per',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '固定费用',
           key: 'fixed_fee',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: 'ID',
           key: 'id',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: 'grade_code',
           key: 'grade_code',
-          width: '100'
+          width: '100',
+          align:'center'
         },
       ],
       data2: [],

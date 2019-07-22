@@ -31,52 +31,62 @@ export default {
         {
           title: '发送者id',
           key: 'fromUid',
-          width: '60'
+          width: '80',
+          align:'center'
         },
         {
           title: '接收者id',
           key: 'toUid',
-          width: '60'
+          width: '80',
+          align:'center'
         },
         {
           title: 'id',
           key: 'id',
-          width: '60'
+          width: '60',
+          align:'center'
         },
         {
           title: '标题',
           key: 'title',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '摘要',
           key: 'summary',
-          width: '80'
+          width: '180',
+          align:'center'
         },
         {
           title: '额外信息',
           key: 'extra',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '类型',
           key: 'dtreeType',
-          width: '120'
+          width: '120',
+          align:'center'
         },
         {
           title: '信息状态',
           key: 'msgStatus',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '创建时间',
           key: 'createTime',
-          width: '180'
+          width: '180',
+          align:'center'
         },
         {
           title: '发送时间',
           key: 'sendTime',
-          width: '180'
+          width: '180',
+          align:'center'
         },
       ],
       data: [],

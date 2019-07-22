@@ -38,22 +38,32 @@ export default {
         {
           title: 'id',
           key: 'id',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '用户id',
           key: 'uid',
-          width: '80'
+          width: '80',
+          align:'center'
         },
         {
           title: '用户姓名',
           key: 'username',
-          width: '100'
+          width: '100',
+          align:'center'
         },
         {
           title: '用户电话',
           key: 'mobile',
-          width: '180'
+          width: '180',
+          align:'center'
+        },
+        {
+          title: '用户邮箱',
+          key: 'Email',
+          width: '120',
+          align:'center'
         },
         // {
         //   title: '内容',
@@ -63,17 +73,13 @@ export default {
         {
           title: '添加时间',
           key: 'create_time',
-          width: '180'
+          width: '180',
+          align:'center'
         },
         {
           title: '更新时间',
           key: 'update_time',
           width: '180'
-        },
-        {
-          title: '用户邮箱',
-          key: 'Email',
-          width: '120'
         },
       ],
       data: [],
@@ -81,6 +87,7 @@ export default {
       rowHandle: {
         columnHeader: '操作',
         width: '120',
+        align:'center',
         custom:[
           {
             text: '查看内容',
